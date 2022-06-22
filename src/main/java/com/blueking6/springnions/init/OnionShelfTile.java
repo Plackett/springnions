@@ -26,7 +26,7 @@ public class OnionShelfTile extends BlockEntity {
 	    }
 	    
 	    private ItemStackHandler createInventory() {
-	    	return new ItemStackHandler(6) {
+	    	return new ItemStackHandler(8) {
 	    		@Override
 	    		public ItemStack extractItem(int slot, int amount, boolean simulate) {
 	    			return super.extractItem(slot, amount, simulate);
@@ -84,7 +84,7 @@ public class OnionShelfTile extends BlockEntity {
 	    }
 
 		public ItemStack appendItem(ItemStack item) {
-	    	for(var i = 0; i < 5; i++) {
+	    	for(var i = 0; i < 7; i++) {
 	    		if(this.inventory.getStackInSlot(i).isEmpty()) {
 	    			ItemStack insertion = inventory.insertItem(i, item, false);
 	    			return insertion;
@@ -94,7 +94,7 @@ public class OnionShelfTile extends BlockEntity {
 	    }
 	    
 	    public ItemStack returnItem() {
-	    	for(var i = 5; i > 0; i--) {
+	    	for(var i = 7; i >= 0; i--) {
 	    		if(this.inventory.getStackInSlot(i).isEmpty() == false) {
 	    			ItemStack extraction = inventory.extractItem(i, 1, false);
 	    			return extraction;
