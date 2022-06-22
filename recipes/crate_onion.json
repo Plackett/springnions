@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "springnions.onion_crate"
+        }
+    ],
+    "result": {
+        "item": "springnions.onion",
+        "count": 1
+    },
+    "group": "springnions"
+}

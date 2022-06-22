@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "springnions:block/onion_crate" },
+    "facing=south": { "model": "springnions:block/onion_crate", "y":  180},
+    "facing=west": { "model": "springnions:block/onion_crate", "y":  270},
+    "facing=east": { "model": "springnions:block/onion_crate", "y":  90}
+  }
+}

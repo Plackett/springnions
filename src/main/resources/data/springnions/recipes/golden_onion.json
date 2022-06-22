@@ -1,0 +1,37 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:gold_nugget"
+        },
+        {
+            "item": "minecraft:gold_nugget"
+        },
+        {
+            "item": "minecraft:gold_nugget"
+        },
+        {
+            "item": "minecraft:gold_nugget"
+        },
+        {
+            "item": "springnions:onion"
+        },
+        {
+            "item": "minecraft:gold_nugget"
+        },
+        {
+            "item": "minecraft:gold_nugget"
+        },
+        {
+            "item": "minecraft:gold_nugget"
+        },
+        {
+            "item": "minecraft:gold_nugget"
+        }
+    ],
+    "result": {
+        "item": "springnions:golden_onion",
+        "count": 1
+    },
+    "group": "springnions"
+}

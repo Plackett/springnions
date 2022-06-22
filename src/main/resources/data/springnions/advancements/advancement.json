@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "springnions:onion"
+    },
+    "title": "Layers of Onions",
+    "description": "Store an Onion in an Onion Shelf.",
+    "frame": "goal",
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "item": {
+          "items": [
+            "springnions:onion"
+          ]
+        },
+        "location": {
+          "block": {
+            "blocks": [
+              "springnions:onion_shelf"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
