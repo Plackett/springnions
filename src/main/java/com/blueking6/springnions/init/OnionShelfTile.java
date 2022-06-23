@@ -106,12 +106,6 @@ public class OnionShelfTile extends BlockEntity {
 		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 			return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? this.handler.cast() : super.getCapability(cap, side);
 		}
-
-		public ItemStack getItemInSlot(int i) {
-			return this.inventory.getStackInSlot(i);
-		}
-		
-		
 	    
 }
 
