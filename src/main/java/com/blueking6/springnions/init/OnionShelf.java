@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class OnionShelf extends Block implements EntityBlock {
-	public static final IntegerProperty HAS_ITEM = IntegerProperty.create("HAS_ITEM", 0, 7);
+	public static final IntegerProperty HAS_ITEM = IntegerProperty.create("HAS_ITEM", 0, 8);
 	private static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	private static final VoxelShape SHAPE =  Block.box(0, 0, 0, 16, 32, 16);
 	
@@ -46,7 +46,7 @@ public class OnionShelf extends Block implements EntityBlock {
     			 player.setItemInHand(hand, shelf.appendItem(player.getItemInHand(hand)));
     			 for(int i = 7; i >= 0; i--) {
     				 if(shelf.getItemInSlot(i).isEmpty() == false) {
-    					 state.setValue(HAS_ITEM, i);
+    					 state.setValue(HAS_ITEM, i+1);
     					 break;
     				 }
     			 }

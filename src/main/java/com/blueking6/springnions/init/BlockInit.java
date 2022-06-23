@@ -17,7 +17,7 @@ public class BlockInit {
 	
 	public static final RegistryObject<Block> ONION_SHELF = BLOCKS.register("onion_shelf", () -> new OnionShelf(BlockBehaviour.Properties.of(Material.WOOD)));
 	public static final RegistryObject<Block> ONION_CRATE = BLOCKS.register("onion_crate", () -> new OnionCrate(BlockBehaviour.Properties.of(Material.WOOD)));
-	public static final RegistryObject<Block> ONION_PLANT = BLOCKS.register("onion_plant", () -> new onion(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion()));
+	public static final RegistryObject<Block> ONION_PLANT = BLOCKS.register("onion_plant", () -> new Onion(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion()));
 	
 /*	private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
 		RegistryObject<T> toReturn = BLOCKS.register(name, block);

@@ -5,16 +5,15 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-public class onion extends CropBlock {
-	public static final IntegerProperty AGE = BlockStateProperties.AGE_5;
+public class Onion extends CropBlock {
+	public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 	
-	public onion(Properties properties) {
+	public Onion(Properties properties) {
 		super(properties);
 	}
 
 	@Override
 	public int getMaxAge() {
-		// TODO Auto-generated method stub
 		return 7;
 	}
 
