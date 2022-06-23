@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "springnions:block/onion_shelf",
 		"1": "springnions:block/onioncrop",
-		"2": "springnions:blockonion_crate_model",
+		"2": "springnions:block/onion_crate_model",
 		"particle": "springnions:block/onion_shelf"
 	},
 	"elements": [

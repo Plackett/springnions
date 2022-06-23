@@ -62,7 +62,7 @@ public class OnionShelf extends Block implements EntityBlock {
     public BlockState UpdateState(Level level, BlockPos pos, BlockState state, OnionShelfTile shelf) {
     	int v = 0;
     	for(int i = 0; i < 7; i++) {
-			 if(shelf.getItemInSlot(i).isEmpty() == false) {
+			 if(shelf.inventory.getStackInSlot(i).isEmpty() == false) {
 				 v++;
 			 }
 		 }
