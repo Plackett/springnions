@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class OnionShelf extends Block implements EntityBlock {
-	public static final IntegerProperty HAS_ITEM = IntegerProperty.create("HAS_ITEM", 0, 8);
+	public static final IntegerProperty HASITEM = IntegerProperty.create("has_item", 0, 8);
 	private static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	private static final VoxelShape SHAPE =  Block.box(0, 0, 0, 16, 32, 16);
 	
@@ -44,16 +44,13 @@ public class OnionShelf extends Block implements EntityBlock {
     	 if (level.isClientSide && level.getBlockEntity(pos) instanceof final OnionShelfTile shelf) {
     		 if(player.getItemInHand(hand).is(ItemInit.ONION_CRATE.get())) {
     			 player.setItemInHand(hand, shelf.appendItem(player.getItemInHand(hand)));
-    			 for(int i = 7; i >= 0; i--) {
-    				 if(shelf.getItemInSlot(i).isEmpty() == false) {
-    					 state.setValue(HAS_ITEM, i+1);
-    					 break;
-    				 }
-    			 }
+    			 state = UpdateState(level, pos, state, shelf);
+    			 level.setBlockAndUpdate(pos, state);
     		 } else {
     			 if(player.getItemInHand(hand).isEmpty()) {
     				 player.setItemInHand(hand, shelf.returnItem());
-        			 System.out.println(shelf.getItemInSlot(0));
+        			 state = UpdateState(level, pos, state, shelf);
+        			 level.setBlockAndUpdate(pos, state);
     			 }
     		 }
              return InteractionResult.SUCCESS;
@@ -61,6 +58,16 @@ public class OnionShelf extends Block implements EntityBlock {
              return InteractionResult.CONSUME;
           }
 	}
+    
+    public BlockState UpdateState(Level level, BlockPos pos, BlockState state, OnionShelfTile shelf) {
+    	int v = 0;
+    	for(int i = 0; i < 7; i++) {
+			 if(shelf.getItemInSlot(i).isEmpty() == false) {
+				 v++;
+			 }
+		 }
+    	return state.setValue(HASITEM, v);
+    }
     
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -84,6 +91,6 @@ public class OnionShelf extends Block implements EntityBlock {
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(FACING, HAS_ITEM); }
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(FACING, HASITEM); }
 	
 }
