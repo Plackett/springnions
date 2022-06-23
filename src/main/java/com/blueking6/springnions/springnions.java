@@ -45,6 +45,6 @@ public class springnions {
 	
 	private void clientSetup(final FMLClientSetupEvent event) {
 		ItemBlockRenderTypes.setRenderLayer(BlockInit.ONION_PLANT.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(BlockInit.ONION_SHELF.get(), RenderType.translucent());
+		ItemBlockRenderTypes.setRenderLayer(BlockInit.ONION_SHELF.get(), RenderType.cutoutMipped());
 	}
 }
