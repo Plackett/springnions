@@ -18,31 +18,30 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod("springnions")
 public class springnions {
-	
+
 	public static final String MOD_ID = "springnions";
-	
+
 	public static final CreativeModeTab SPNION_TAB = new CreativeModeTab(MOD_ID) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public ItemStack makeIcon( ) {
+		public ItemStack makeIcon() {
 			return new ItemStack(ItemInit.ONION_CRATE.get());
 		}
 	};
-	
+
 	public springnions() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		
+
 		ItemInit.register(bus);
 		BlockInit.register(bus);
 		TileEntityInit.register(bus);
-		
+
 		bus.addListener(this::clientSetup);
-		
+
 		MinecraftForge.EVENT_BUS.register(this);
-		
-		
+
 	}
-	
+
 	private void clientSetup(final FMLClientSetupEvent event) {
 		ItemBlockRenderTypes.setRenderLayer(BlockInit.ONION_PLANT.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(BlockInit.ONION_SHELF.get(), RenderType.cutoutMipped());

@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class Onion extends CropBlock {
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
-	
+
 	public Onion(Properties properties) {
 		super(properties);
 	}

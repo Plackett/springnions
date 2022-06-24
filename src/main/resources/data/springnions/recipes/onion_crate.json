@@ -1,22 +1,37 @@
 {
-    "type": "minecraft:crafting_shapeless",
-    "ingredients": [
-        {
-            "item": "springnions:onion"
-        },
-        {
-            "item": "springnions:onion"
-        },
-        {
-            "item": "springnions:onion"
-        },
-        {
-            "item": "springnions:onion"
-        }
-    ],
-    "result": {
-        "item": "springnions:onion_crate",
-        "count": 1
-    },
-    "group": "springnions"
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		},
+		{
+			"item": "springnions:onion"
+		}
+	],
+	"result": {
+		"item": "springnions:onion_crate",
+		"count": 1
+	},
+	"group": "springnions"
 }

@@ -4,12 +4,12 @@ license="All rights reserved"
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
 modId="springnions" #mandatory
-version="${file.jarVersion}" #mandatory
+version="1.0.0" #mandatory
 displayName="Springnions" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
-logoFile="examplemod.png" #optional
-credits="Thanks for this example mod goes to Java" #optional
+logoFile="springnionslogo.png" #optional
+credits="Thanks for this mod goes to Java, Mojang, and the Forge Modding Discord!" #optional
 authors="Blueking6" #optional
 description='''Adding Onions to Minecraft Since 2022!'''
 

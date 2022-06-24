@@ -88,14 +88,16 @@ public class OnionShelfTile extends BlockEntity {
 		ItemStack returnitem = ItemStack.EMPTY;
 		for (var i = 0; i < 8; i++) {
 			if (this.inventory.getStackInSlot(i).isEmpty()) {
-				if (returnitem.isEmpty()) {
-					returnitem = inventory.insertItem(i, item, false);
+				if (item.isEmpty()) {
+					break;
 				} else {
-					returnitem = inventory.insertItem(i, returnitem, false);
+					item = inventory.insertItem(i, item, false);
+					returnitem = item;
 				}
 			}
 		}
 		return returnitem;
+
 	}
 
 	public ItemStack returnItem() {
