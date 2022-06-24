@@ -3,10 +3,8 @@ package com.blueking6.springnions.init;
 import com.blueking6.springnions.springnions;
 
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,10 +30,6 @@ public class ItemInit {
 
 	public static final RegistryObject<Item> ONION_SHELF_ITEM = ITEMS.register("onion_shelf",
 			() -> new BlockItem(BlockInit.ONION_SHELF.get(), new Item.Properties().tab(springnions.SPNION_TAB)));
-
-	public static final RegistryObject<Item> SOYMILK_BUCKET = ITEMS.register("soymilk_bucket",
-			() -> new BucketItem(FluidInit.SOYMILK,
-					new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(springnions.SPNION_TAB)));
 
 	public static void register(IEventBus eventBus) {
 		ITEMS.register(eventBus);
