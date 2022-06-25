@@ -1,3 +1,7 @@
 {
-	"parent":"springnions:item/soymilk_bucket"
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "springnions:item/soymilk_bucket"
+	}
+
 }
