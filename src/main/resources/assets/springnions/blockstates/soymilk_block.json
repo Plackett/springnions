@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "springnions:block/soymilk"
+      "model": "springnions:block/soymilk_block"
     }
   }
 }

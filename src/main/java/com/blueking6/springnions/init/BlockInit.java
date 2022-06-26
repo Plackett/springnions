@@ -24,7 +24,7 @@ public class BlockInit {
 	public static final RegistryObject<Block> ONION_SHELF = BLOCKS.register("onion_shelf",
 			() -> new OnionShelf(BlockBehaviour.Properties.of(Material.WOOD)));
 	public static RegistryObject<LiquidBlock> SOYMILK_BLOCK = BLOCKS.register("soymilk_block",
-			() -> new LiquidBlock(FluidInit.SOYMILK,
+			() -> new SoyMilkBlock(FluidInit.SOYMILK,
 					Properties.of(Material.WATER).noCollission().strength(100.0F).noLootTable()));
 
 	public static void register(IEventBus eventBus) {

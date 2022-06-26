@@ -7,15 +7,21 @@ import net.minecraftforge.fluids.FluidType;
 
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.FogRenderer.FogMode;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.blueking6.springnions.springnions;
+import com.mojang.blaze3d.shaders.FogShape;
+import com.mojang.math.Vector3f;
 
 import java.util.function.Consumer;
 
@@ -36,7 +42,7 @@ public class FluidInit {
 	}
 
 	public static RegistryObject<FluidType> SOYMILK_TYPE = FLUID_TYPES.register("soymilk",
-			() -> new FluidType(FluidType.Properties.create()) {
+			() -> new FluidType(FluidType.Properties.create().supportsBoating(true).canSwim(true).canConvertToSource(false).temperature(200)) {
 				@Override
 				public void initializeClient(Consumer<IFluidTypeRenderProperties> consumer) {
 					consumer.accept(new IFluidTypeRenderProperties() {
@@ -60,6 +66,21 @@ public class FluidInit {
 						public int getColorTint() {
 							return 0xf2f0e9FF;
 						}
+
+						@Override
+						public @NotNull Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level,
+								int renderDistance, float darkenWorldAmount, Vector3f fluidFogColor) {
+							return IFluidTypeRenderProperties.super.modifyFogColor(camera, partialTick, level,
+									renderDistance, darkenWorldAmount, new Vector3f(159, 213, 85));
+						}
+
+						@Override
+						public void modifyFogRender(Camera camera, FogMode mode, float renderDistance,
+								float partialTick, float nearDistance, float farDistance, FogShape shape) {
+							IFluidTypeRenderProperties.super.modifyFogRender(camera, FogMode.FOG_SKY, renderDistance,
+									partialTick, nearDistance, farDistance, FogShape.SPHERE);
+						}
+
 					});
 				}
 			});
