@@ -1,4 +1,4 @@
-package com.blueking6.springnions.init;
+package com.blueking6.springnions.fluids;
 
 import java.util.function.Supplier;
 

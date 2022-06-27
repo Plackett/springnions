@@ -1,6 +1,11 @@
 package com.blueking6.springnions.init;
 
 import com.blueking6.springnions.springnions;
+import com.blueking6.springnions.blocks.OnionShelf;
+import com.blueking6.springnions.blocks.TofuPress;
+import com.blueking6.springnions.crops.Onion;
+import com.blueking6.springnions.fluids.SoyMilkBlock;
+import com.blueking6.springnions.items.OnionCrate;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,6 +31,7 @@ public class BlockInit {
 	public static RegistryObject<LiquidBlock> SOYMILK_BLOCK = BLOCKS.register("soymilk_block",
 			() -> new SoyMilkBlock(FluidInit.SOYMILK,
 					Properties.of(Material.WATER).noCollission().strength(100.0F).noLootTable()));
+	public static final RegistryObject<Block> TOFU_PRESS = BLOCKS.register("tofu_press", () -> new TofuPress(BlockBehaviour.Properties.of(Material.HEAVY_METAL)));
 
 	public static void register(IEventBus eventBus) {
 		BLOCKS.register(eventBus);

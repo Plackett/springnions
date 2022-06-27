@@ -1,4 +1,6 @@
-package com.blueking6.springnions.init;
+package com.blueking6.springnions.blocks;
+
+import com.blueking6.springnions.init.TileEntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

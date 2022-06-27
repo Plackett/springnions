@@ -1,4 +1,6 @@
-package com.blueking6.springnions.init;
+package com.blueking6.springnions.crops;
+
+import com.blueking6.springnions.init.ItemInit;
 
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.CropBlock;
