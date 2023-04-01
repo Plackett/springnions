@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "/i/",
+        "CSC",
+        "CZC"
+    ],
+    "key": {
+        "/": {
+            "item": "minecraft:stick"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "C": {
+            "tag": "forge:cobblestone"
+        },
+        "S": {
+            "item": "springnions:hydrochip2"
+        },
+        "Z": {
+            "item": "springnions:onion_shelf"
+        }
+    },
+    "result": {
+        "item": "springnions:tofu_press2",
+        "count": 1
+    },
+    "group": "press"
+}

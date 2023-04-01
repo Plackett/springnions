@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "item": "springnions:onion_shelf"
+    },
+    "title": "Layers of Onions",
+    "description": "Store an Onion Crate in an Onion Shelf.",
+    "frame": "goal",
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "springnions:onion_planter",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "item": {
+          "items": [
+            "springnions:onion_crate"
+          ]
+        },
+        "location": {
+          "block": {
+            "blocks": [
+              "springnions:onion_shelf"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

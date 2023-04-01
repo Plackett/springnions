@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "springnions:soybeans"
+    },
+    "title": "Beans, Beans, the Musical Fruit",
+    "description": "Plant your first soybean plant.",
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "springnions:springnions",
+  "criteria": {
+    "minecraft:": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "item": {
+          "items": [
+            "springnions:soybeans"
+          ]
+        },
+        "location": {
+          "block": {
+            "blocks": [
+              "minecraft:farmland"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "RGR",
+        "S#S"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:quartz"
+        },
+        "S": {
+            "item": "springnions:golden_onion"
+        },
+        "R": {
+            "item": "minecraft:redstone"
+        },
+        "G": {
+            "item": "springnions:hydrochip2"
+        }
+    },
+    "result": {
+        "item": "springnions:hydrochip3",
+        "count": 1
+    },
+    "group": "hchip"
+}

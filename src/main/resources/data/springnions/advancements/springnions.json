@@ -1,0 +1,17 @@
+{
+  "display": {
+    "icon": {
+      "item": "springnions:onion"
+    },
+    "title": "Springnions!",
+    "description": "Onion-Related Advancements",
+    "background": "springnions:textures/block/onion_shelf.png",
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "minecraft:": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

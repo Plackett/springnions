@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "springnions:tofu_press3"
+    },
+    "title": "Maximum Overdrive",
+    "description": "Construct the fastest tofu press possible.",
+    "frame": "task",
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "springnions:golden_onion_advancement",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:tofu_press3"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

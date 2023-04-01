@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "springnions:tofu_press"
+    },
+    "title": "Fresh off the Presses",
+    "description": "Make your first batch of tofu.",
+    "frame": "task",
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "springnions:bean_planter",
+  "criteria": {
+    "minecraft:": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:tofu"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

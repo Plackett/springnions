@@ -1,0 +1,9 @@
+{
+	"parent":"springnions:block/tofu_press5",
+	"textures": {
+		"0": "springnions:block/tofupresspallete4",
+		"1": "springnions:block/tofu_presser4",
+		"2": "springnions:item/tofu",
+		"particle": "springnions:block/tofupresspallete4"
+	}
+}
