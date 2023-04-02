@@ -28,5 +28,10 @@
         }
       }
     }
-  }
+  },
+  "rewards": {
+		"recipes": [
+			"springnions:onion_stew"
+		]
+	}
 }

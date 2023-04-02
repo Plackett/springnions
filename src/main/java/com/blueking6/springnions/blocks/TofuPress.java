@@ -48,6 +48,7 @@ public class TofuPress extends Block implements EntityBlock {
 		} else {
 			items.add(new ItemStack(ItemInit.TOFU.get(), 1));
 		}
+		items.add(new ItemStack(ItemInit.TOFUPRESS.get(),1));
 		return items;
 	}
 

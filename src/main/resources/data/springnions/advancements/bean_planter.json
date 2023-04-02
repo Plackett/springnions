@@ -27,5 +27,12 @@
         }
       }
     }
-  }
+  },
+  "rewards": {
+		"recipes": [
+			"springnions:tofu_press",
+			"springnions:soymilk_bucket",
+			"springnions:hydrochip"
+		]
+	}
 }

@@ -23,5 +23,13 @@
         ]
       }
     }
-  }
+  },
+  "rewards": {
+		"recipes": [
+			"springnions:tofu_press2",
+			"springnions:grilled_tofu_smelt",
+			"springnions:grilled_tofu",
+			"springnions:hydrochip2"
+		]
+	}
 }

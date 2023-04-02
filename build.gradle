@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
-version = '1.0.2'
+version = '1.0.3'
 group = 'com.blueking6.springnions' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'springnions'
 
@@ -148,7 +148,7 @@ jar {
         attributes([
                 "Specification-Title"     : "springnions",
                 "Specification-Vendor"    : "blueking6",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Specification-Version"   : "2", // We are version 2 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "blueking6",

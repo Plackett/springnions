@@ -1,31 +1,39 @@
 {
-  "display": {
-    "icon": {
-      "item": "springnions:onion"
-    },
-    "title": "Onions of Layers",
-    "description": "Plant your first Onion.",
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "parent": "springnions:springnions",
-  "criteria": {
-    "minecraft:": {
-      "trigger": "minecraft:item_used_on_block",
-      "conditions": {
-        "item": {
-          "items": [
-            "springnions:onion"
-          ]
-        },
-        "location": {
-          "block": {
-            "blocks": [
-              "minecraft:farmland"
-            ]
-          }
-        }
-      }
-    }
-  }
+	"display": {
+		"icon": {
+			"item": "springnions:onion"
+		},
+		"title": "Onions of Layers",
+		"description": "Plant your first Onion.",
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "springnions:springnions",
+	"criteria": {
+		"minecraft:": {
+			"trigger": "minecraft:item_used_on_block",
+			"conditions": {
+				"item": {
+					"items": [
+						"springnions:onion"
+					]
+				},
+				"location": {
+					"block": {
+						"blocks": [
+							"minecraft:farmland"
+						]
+					}
+				}
+			}
+		}
+	},
+	"rewards": {
+		"recipes": [
+			"springnions:onion_crate",
+			"springnions:onion_shelf",
+			"springnions:golden_onion",
+			"springnions:onion"
+		]
+	}
 }

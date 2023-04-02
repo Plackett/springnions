@@ -54,6 +54,7 @@ public class TofuPress2 extends TofuPress {
 		} else {
 			items.add(new ItemStack(ItemInit.TOFU.get(), 1));
 		}
+		items.add(new ItemStack(ItemInit.TOFUPRESS2.get(),1));
 		return items;
 	}
 	

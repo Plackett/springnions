@@ -23,5 +23,11 @@
         ]
       }
     }
-  }
+  },
+  "rewards": {
+		"recipes": [
+			"springnions:tofu_press3",
+			"springnions:hydrochip3"
+		]
+	}
 }
