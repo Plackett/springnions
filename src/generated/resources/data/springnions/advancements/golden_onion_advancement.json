@@ -1,0 +1,39 @@
+{
+  "parent": "springnions:onion_planter",
+  "criteria": {
+    "obtained_golden_onion": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:golden_onion"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Obtain the fabled: Golden Onion."
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "springnions:golden_onion"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "Not A Twilight Reference"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_golden_onion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

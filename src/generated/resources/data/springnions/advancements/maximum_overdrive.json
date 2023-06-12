@@ -1,0 +1,39 @@
+{
+  "parent": "springnions:presses",
+  "criteria": {
+    "has_press": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:tofu_press3"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Construct the fastest tofu press possible."
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "springnions:tofu_press3"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "Maximum Overdrive"
+    }
+  },
+  "requirements": [
+    [
+      "has_press"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

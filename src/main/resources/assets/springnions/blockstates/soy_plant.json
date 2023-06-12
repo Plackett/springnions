@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"age=0": { "model" : "springnions:block/soy_stage0"},
+		"age=1": { "model" : "springnions:block/soy_stage1"},
+		"age=2": { "model" : "springnions:block/soy_stage2"},
+		"age=3": { "model" : "springnions:block/soy_stage3"},
+		"age=4": { "model" : "springnions:block/soy_stage3"},
+		"age=5": { "model" : "springnions:block/soy_stage4"},
+		"age=6": { "model" : "springnions:block/soy_stage4"},
+		"age=7": { "model" : "springnions:block/soy_stage5"}
+	}
+}

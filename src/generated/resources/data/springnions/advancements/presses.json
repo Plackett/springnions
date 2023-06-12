@@ -1,0 +1,39 @@
+{
+  "parent": "springnions:bean_planter",
+  "criteria": {
+    "has_tofu": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:tofu"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Make your first batch of tofu."
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "springnions:tofu_press"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "Fresh Off The Presses"
+    }
+  },
+  "requirements": [
+    [
+      "has_tofu"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

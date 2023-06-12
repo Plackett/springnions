@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"animation=0": {
+			"model": "springnions:block/tofu_pressc-0"
+		},
+		"animation=1": {
+			"model": "springnions:block/tofu_pressc-1"
+		},
+		"animation=2": {
+			"model": "springnions:block/tofu_pressc-2"
+		},
+		"animation=3": {
+			"model": "springnions:block/tofu_pressc-3"
+		},
+		"animation=4": {
+			"model": "springnions:block/tofu_pressc-4"
+		},
+		"animation=5": {
+			"model": "springnions:block/tofu_pressc-5"
+		}
+	}
+}

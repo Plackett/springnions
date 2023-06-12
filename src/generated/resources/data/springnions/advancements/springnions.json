@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "has_onion": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:onion"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Onion-Related Advancements"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "springnions:onion"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "Springnions!"
+    }
+  },
+  "requirements": [
+    [
+      "has_onion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

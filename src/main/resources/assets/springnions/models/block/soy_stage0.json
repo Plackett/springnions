@@ -1,0 +1,42 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "springnions:block/soyplant",
+		"particle": "springnions:block/soyplant"
+	},
+	"elements": [
+		{
+			"from": [7.7, -1.3, 7.95],
+			"to": [8.7, -0.7, 8.55],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [2.7, 0, 1.8]},
+			"faces": {
+				"north": {"uv": [3, 14.4, 4, 15], "texture": "#0"},
+				"east": {"uv": [3, 14.4, 4, 15], "texture": "#0"},
+				"south": {"uv": [3, 14.4, 4, 15], "texture": "#0"},
+				"west": {"uv": [3, 14.4, 4, 15], "texture": "#0"},
+				"up": {"uv": [3, 14.4, 4, 15], "texture": "#0"},
+				"down": {"uv": [3, 14.4, 4, 15], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7.95, 0, 8.05],
+			"to": [8.45, 1, 8.3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.7, 0, 1.8]},
+			"faces": {
+				"north": {"uv": [3, 4, 3.25, 5], "texture": "#0"},
+				"east": {"uv": [3, 4, 3.25, 5], "texture": "#0"},
+				"south": {"uv": [3, 4, 3.25, 5], "texture": "#0"},
+				"west": {"uv": [3, 4, 3.25, 5], "texture": "#0"},
+				"up": {"uv": [3, 4, 3.25, 5], "texture": "#0"},
+				"down": {"uv": [3, 4, 3.25, 5], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "0",
+			"origin": [2, -0.4, 8],
+			"children": [0, 1]
+		}
+	]
+}

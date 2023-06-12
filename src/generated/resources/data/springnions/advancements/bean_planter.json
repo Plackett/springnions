@@ -1,0 +1,57 @@
+{
+  "parent": "springnions:springnions",
+  "criteria": {
+    "plant_bean": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [
+                  "minecraft:farmland"
+                ]
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "springnions:soybeans"
+              ]
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Plant your first soybean plant."
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "springnions:soybeans"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "Beans, Beans, the Musical Fruit"
+    }
+  },
+  "requirements": [
+    [
+      "plant_bean"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "springnions:hydrochip"
+    ]
+  },
+  "sends_telemetry_event": true
+}

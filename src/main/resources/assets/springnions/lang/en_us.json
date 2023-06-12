@@ -1,0 +1,27 @@
+{
+	"item.springnions.onion_crate": "Onion Crate",
+	"item.springnions.onion": "Onion",
+	"item.springnions.soybeans": "Soybeans",
+	"item.springnions.golden_onion": "Golden Onion",
+	"item.springnions.onion_stew": "Onion Stew",
+	"item.springnions.soymilk_bucket": "Soymilk Bucket",
+	"item.springnions.tofu": "Tofu",
+	"item.springnions.grilled_tofu": "Grilled Tofu",
+	"item.springnions.tofu_press": "Tofu Press",
+	"item.springnions.tofu_press2": "Tofu Press Lv2",
+	"item.springnions.tofu_press3": "Tofu Press Lv3",
+	"item.springnions.tofu_pressc": "Tofu Press Creative",
+	"item.springnions.hydrochip": "Hydroelectric Chip",
+	"item.springnions.hydrochip2": "Hydroelectric Chip Lv2",
+	"item.springnions.hydrochip3": "Hydroelectric Chip Lv3",
+	
+	"block.springnions.onion_shelf": "Onion Shelf",
+	"block.springnions.tofu_press": "Tofu Press",
+	"block.springnions.tofu_press2": "Tofu Press Lv2",
+	"block.springnions.tofu_press3": "Tofu Press Lv3",
+	"block.springnions.tofu_pressc": "Tofu Press Creative",
+	
+	"itemGroup.springnions": "Springnions",
+	
+	"sounds.springnions.tofu_press_process": "Tofu Press Pressing"
+}

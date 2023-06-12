@@ -1,0 +1,52 @@
+{
+  "parent": "springnions:onion_planter",
+  "criteria": {
+    "used_shelf": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [
+                  "springnions:onion_shelf"
+                ]
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "springnions:onion_crate"
+              ]
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Store an Onion Crate in an Onion Shelf."
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "springnions:onion_shelf"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "Layers of Onions"
+    }
+  },
+  "requirements": [
+    [
+      "used_shelf"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
