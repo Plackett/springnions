@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "hchip",
+  "key": {
+    "/": {
+      "item": "springnions:onion"
+    },
+    "i": {
+      "item": "minecraft:stick"
+    },
+    "o": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "i/i",
+    "/o/",
+    "i/i"
+  ],
+  "result": {
+    "item": "springnions:hydrochip"
+  },
+  "show_notification": true
+}

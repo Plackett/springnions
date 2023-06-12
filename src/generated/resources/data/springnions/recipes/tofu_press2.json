@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "press",
+  "key": {
+    "/": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "H": {
+      "item": "springnions:hydrochip2"
+    },
+    "M": {
+      "item": "springnions:onion_shelf"
+    },
+    "o": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "/o/",
+    "CHC",
+    "CMC"
+  ],
+  "result": {
+    "item": "springnions:tofu_press2"
+  },
+  "show_notification": true
+}

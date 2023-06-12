@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "springnions:grilled_tofu_smelt"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "obtain_tofu": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:tofu"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_tofu",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "springnions:grilled_tofu_smelt"
+    ]
+  },
+  "sends_telemetry_event": false
+}

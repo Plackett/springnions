@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "springnions",
+  "key": {
+    "/": {
+      "tag": "minecraft:planks"
+    },
+    "_": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "o": {
+      "item": "springnions:onion"
+    }
+  },
+  "pattern": [
+    "___",
+    "/o ",
+    "___"
+  ],
+  "result": {
+    "item": "springnions:onion_shelf"
+  },
+  "show_notification": true
+}

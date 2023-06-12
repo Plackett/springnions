@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "hchip",
+  "key": {
+    "/": {
+      "item": "springnions:golden_onion"
+    },
+    "E": {
+      "item": "minecraft:redstone"
+    },
+    "T": {
+      "item": "springnions:hydrochip2"
+    },
+    "i": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    "i/i",
+    "ETE",
+    "/i/"
+  ],
+  "result": {
+    "item": "springnions:hydrochip3"
+  },
+  "show_notification": true
+}

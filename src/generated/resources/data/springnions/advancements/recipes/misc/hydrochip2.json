@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "springnions:hydrochip2"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "obtain_tofu": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:tofu"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_tofu",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "springnions:hydrochip2"
+    ]
+  },
+  "sends_telemetry_event": false
+}

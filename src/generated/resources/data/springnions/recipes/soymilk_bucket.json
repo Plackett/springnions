@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "springnions:soybeans"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "iWi",
+    " i "
+  ],
+  "result": {
+    "item": "springnions:soymilk_bucket"
+  },
+  "show_notification": true
+}

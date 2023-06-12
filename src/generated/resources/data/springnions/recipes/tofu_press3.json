@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "press",
+  "key": {
+    "/": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:gold_ingot"
+    },
+    "H": {
+      "item": "springnions:hydrochip3"
+    },
+    "M": {
+      "item": "springnions:onion_shelf"
+    },
+    "o": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    "/o/",
+    "CHC",
+    "CMC"
+  ],
+  "result": {
+    "item": "springnions:tofu_press3"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "/": {
+      "item": "minecraft:gold_nugget"
+    },
+    "X": {
+      "item": "springnions:onion"
+    }
+  },
+  "pattern": [
+    "///",
+    "/X/",
+    "///"
+  ],
+  "result": {
+    "item": "springnions:golden_onion"
+  },
+  "show_notification": true
+}

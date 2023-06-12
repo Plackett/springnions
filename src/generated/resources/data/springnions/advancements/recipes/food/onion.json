@@ -1,6 +1,12 @@
 {
-  "parent": "springnions:springnions",
+  "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "springnions:onion"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
     "plant_onion": {
       "conditions": {
         "location": [
@@ -27,34 +33,16 @@
       "trigger": "minecraft:item_used_on_block"
     }
   },
-  "display": {
-    "announce_to_chat": true,
-    "background": "springnions:textures/block/onion_shelf.png",
-    "description": {
-      "translate": "Plant your first onion plant."
-    },
-    "frame": "task",
-    "hidden": false,
-    "icon": {
-      "item": "springnions:onion"
-    },
-    "show_toast": true,
-    "title": {
-      "translate": "Onions of Layers"
-    }
-  },
   "requirements": [
     [
-      "plant_onion"
+      "plant_onion",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "springnions:onion_crate",
-      "springnions:onion_shelf",
-      "springnions:golden_onion",
       "springnions:onion"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

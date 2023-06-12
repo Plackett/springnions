@@ -1,6 +1,12 @@
 {
-  "parent": "springnions:springnions",
+  "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "springnions:soymilk_bucket"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
     "plant_bean": {
       "conditions": {
         "location": [
@@ -27,33 +33,16 @@
       "trigger": "minecraft:item_used_on_block"
     }
   },
-  "display": {
-    "announce_to_chat": true,
-    "background": "springnions:textures/block/onion_shelf.png",
-    "description": {
-      "translate": "Plant your first soybean plant."
-    },
-    "frame": "task",
-    "hidden": false,
-    "icon": {
-      "item": "springnions:soybeans"
-    },
-    "show_toast": true,
-    "title": {
-      "translate": "Beans, Beans, the Musical Fruit"
-    }
-  },
   "requirements": [
     [
-      "plant_bean"
+      "plant_bean",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "springnions:tofu_press",
-      "springnions:soymik_bucket",
-      "springnions:hydrochip"
+      "springnions:soymilk_bucket"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

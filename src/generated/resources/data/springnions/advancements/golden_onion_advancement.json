@@ -35,5 +35,11 @@
       "obtained_golden_onion"
     ]
   ],
+  "rewards": {
+    "recipes": [
+      "springnions:tofu_press2",
+      "springnions:tofu_press3"
+    ]
+  },
   "sends_telemetry_event": true
 }

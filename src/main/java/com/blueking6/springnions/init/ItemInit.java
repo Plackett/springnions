@@ -3,6 +3,7 @@ package com.blueking6.springnions.init;
 import com.blueking6.springnions.springnions;
 
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
@@ -40,7 +41,7 @@ public class ItemInit {
 			() -> new Item(new Item.Properties()));
 
 	public static final RegistryObject<Item> ONION_STEW = ITEMS.register("onion_stew",
-			() -> new Item(new Item.Properties().food(FoodInit.ONION_STEW)));
+			() -> new BowlFoodItem(new Item.Properties().food(FoodInit.ONION_STEW)));
 
 	public static final RegistryObject<Item> ONION_SHELF_ITEM = ITEMS.register("onion_shelf",
 			() -> new BlockItem(BlockInit.ONION_SHELF.get(), new Item.Properties()));

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "cookingtime": 160,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "springnions:tofu"
+  },
+  "result": "springnions:grilled_tofu"
+}

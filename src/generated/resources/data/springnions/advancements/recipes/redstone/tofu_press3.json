@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "springnions:tofu_press3"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "obtain_golden_onion": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:golden_onion"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_golden_onion",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "springnions:tofu_press3"
+    ]
+  },
+  "sends_telemetry_event": false
+}

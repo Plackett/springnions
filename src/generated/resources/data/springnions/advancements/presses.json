@@ -35,5 +35,11 @@
       "has_tofu"
     ]
   ],
+  "rewards": {
+    "recipes": [
+      "springnions:hydrochip2",
+      "springnions:hydrochip3"
+    ]
+  },
   "sends_telemetry_event": true
 }
