@@ -142,7 +142,9 @@ public class TofuPressEntity2 extends BlockEntity {
 			// only extract when processing is done (anim == 5)
 			@Override
 			public ItemStack extractItem(int slot, int amount, boolean simulate) {
-				if (getBlockState().getValue(TofuPress2.anim) == 5) {
+				if (getBlockState().getValue(TofuPressC.anim) == 5
+						&& (this.getStackInSlot(0).getItem() == ItemInit.TOFU.get()
+								|| this.getStackInSlot(3).getItem() == ItemInit.SOY_PULP.get())) {
 					return super.extractItem(slot, amount, simulate);
 				} else {
 					return ItemStack.EMPTY;
@@ -152,7 +154,7 @@ public class TofuPressEntity2 extends BlockEntity {
 			// only insert if it is soybeans and reject other items
 			@Override
 			public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-				if (stack.getItem() == ItemInit.SOYBEANS.get()) {
+				if (stack.getItem() == ItemInit.SOYBEANS.get() && getBlockState().getValue(TofuPress2.anim) == 0) {
 					return super.insertItem(slot, stack, simulate);
 				} else {
 					return stack;

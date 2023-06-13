@@ -43,11 +43,13 @@ public class TofuPressEntityC extends BlockEntity {
 		// update stuff for processing item
 		if (!this.level.isClientSide && powerlvl >= 1 && animation >= 1) {
 			if (this.progressc >= 50 / powerlvl && animation <= 4) {
-				if(animation == 1 || animation == 3) {
-					this.level.playSound(null, this.getBlockPos(), SoundInit.TOFU_PRESS_PROCESS.get(), SoundSource.BLOCKS, 0.5f, 1f);
+				if (animation == 1 || animation == 3) {
+					this.level.playSound(null, this.getBlockPos(), SoundInit.TOFU_PRESS_PROCESS.get(),
+							SoundSource.BLOCKS, 0.5f, 1f);
 				}
 				this.progressc = 0;
-				this.level.setBlockAndUpdate(this.getBlockPos(), getBlockState().setValue(TofuPressC.anim,animation+1));
+				this.level.setBlockAndUpdate(this.getBlockPos(),
+						getBlockState().setValue(TofuPressC.anim, animation + 1));
 			}
 			if (animation != 0 && animation != 5) {
 				this.progressc++;
@@ -139,7 +141,9 @@ public class TofuPressEntityC extends BlockEntity {
 			// only extract when processing is done (anim == 5)
 			@Override
 			public ItemStack extractItem(int slot, int amount, boolean simulate) {
-				if (getBlockState().getValue(TofuPressC.anim) == 5) {
+				if (getBlockState().getValue(TofuPressC.anim) == 5
+						&& (this.getStackInSlot(0).getItem() == ItemInit.TOFU.get()
+								|| this.getStackInSlot(3).getItem() == ItemInit.SOY_PULP.get())) {
 					return super.extractItem(slot, amount, simulate);
 				} else {
 					return ItemStack.EMPTY;
@@ -149,7 +153,7 @@ public class TofuPressEntityC extends BlockEntity {
 			// only insert if it is soybeans and reject other items
 			@Override
 			public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-				if (stack.getItem() == ItemInit.SOYBEANS.get()) {
+				if (stack.getItem() == ItemInit.SOYBEANS.get() && getBlockState().getValue(TofuPressC.anim) == 0) {
 					return super.insertItem(slot, stack, simulate);
 				} else {
 					return stack;
@@ -187,7 +191,7 @@ public class TofuPressEntityC extends BlockEntity {
 			return ItemStack.EMPTY;
 		}
 	}
-	
+
 	public ItemStack returnPulp(int animstate) {
 		if (animstate == 5) {
 			return new ItemStack(ItemInit.SOY_PULP.get(), 1);
