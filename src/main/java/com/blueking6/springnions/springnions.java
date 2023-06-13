@@ -53,7 +53,7 @@ public class springnions {
 	public void onServerStarting(ServerStartingEvent event) {
 		// Do something when the server starts
 		LOGGER.info("✿ Springnions Starting... ✿");
-		LOGGER.info("✿ Have a great day!      ✿");
+		LOGGER.info("✿ Have a great day!       ✿");
 	}
 
 	@SubscribeEvent
@@ -75,6 +75,7 @@ public class springnions {
 			event.accept(ItemInit.HYDROCHIP.get());
 			event.accept(ItemInit.HYDROCHIP2.get());
 			event.accept(ItemInit.HYDROCHIP3.get());
+			event.accept(ItemInit.SOY_PULP.get());
 		}
 	}
 

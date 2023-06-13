@@ -7,6 +7,7 @@ import com.blueking6.springnions.init.ItemInit;
 import com.blueking6.springnions.init.TileEntityInit;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -55,24 +56,30 @@ public class TofuPressC extends TofuPress {
 	@Override
 	public InteractionResult use(BlockState state, Level lvl, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult result) {
-		int animation = lvl.getBlockState(pos).getValue(TofuPressC.anim);
+		int animation = lvl.getBlockState(pos).getValue(TofuPress3.anim);
 
-		if (!lvl.isClientSide && player.getItemInHand(hand).getItem() == ItemInit.SOYBEANS.get()
-				&& animation == 0
+		if (!lvl.isClientSide && player.getItemInHand(hand).getItem() == ItemInit.SOYBEANS.get() && animation == 0
 				&& lvl.getBlockEntity(pos) instanceof final TofuPressEntityC tpress) {
-			player.getItemInHand(hand).shrink(1);
-			lvl.setBlockAndUpdate(pos, state.setValue(TofuPressC.anim, 1));
+			if (player.getItemInHand(hand).getCount() >= 4) {
+				player.getItemInHand(hand).shrink(4);
+			} else {
+				player.displayClientMessage(
+						Component.translatable("Must have at least 4 soybeans to make a batch of tofu"), true);
+				return InteractionResult.FAIL;
+			}
+			lvl.setBlockAndUpdate(pos, state.setValue(TofuPress3.anim, 1));
 			return InteractionResult.CONSUME;
 		} else if (!lvl.isClientSide && animation == 5
 				&& lvl.getBlockEntity(pos) instanceof final TofuPressEntityC tpress) {
 			if (player.getItemInHand(hand) == ItemStack.EMPTY) {
 				player.setItemInHand(hand, tpress.returnItem(animation));
 			} else if (player.getItemInHand(hand).getItem() == ItemInit.TOFU.get()
-					&& player.getItemInHand(hand).getCount() <= 63) {
+					&& player.getItemInHand(hand).getCount() <= 61) {
 				player.getInventory().add(tpress.returnItem(animation));
 			} else {
-				player.drop(tpress.returnItem(animation), true);
+				player.addItem(tpress.returnItem(animation));
 			}
+			player.addItem(tpress.returnPulp(animation));
 			lvl.setBlockAndUpdate(pos, state.setValue(TofuPressC.anim, 0));
 			return InteractionResult.SUCCESS;
 		} else {

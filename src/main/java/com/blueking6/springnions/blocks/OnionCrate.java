@@ -1,4 +1,4 @@
-package com.blueking6.springnions.items;
+package com.blueking6.springnions.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;

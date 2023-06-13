@@ -7,6 +7,7 @@ import com.blueking6.springnions.init.ItemInit;
 import com.blueking6.springnions.init.TileEntityInit;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,7 @@ public class TofuPress2 extends TofuPress {
 
 	public static final IntegerProperty anim = IntegerProperty.create("animation", 0, 5);
 	public static final IntegerProperty power = IntegerProperty.create("power", 0, 25);
-	
+
 	public TofuPress2(Properties prop) {
 		super(prop);
 	}
@@ -42,7 +43,7 @@ public class TofuPress2 extends TofuPress {
 		}
 		lvl.setBlockAndUpdate(pos, lvl.getBlockState(pos).setValue(TofuPress2.power, temppower));
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state,
 			net.minecraft.world.level.storage.loot.LootParams.Builder p_60538_) {
@@ -54,10 +55,10 @@ public class TofuPress2 extends TofuPress {
 		} else {
 			items.add(new ItemStack(ItemInit.TOFU.get(), 1));
 		}
-		items.add(new ItemStack(ItemInit.TOFUPRESS2.get(),1));
+		items.add(new ItemStack(ItemInit.TOFUPRESS2.get(), 1));
 		return items;
 	}
-	
+
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return TileEntityInit.TOFU_PRESS2.get().create(pos, state);
@@ -68,10 +69,15 @@ public class TofuPress2 extends TofuPress {
 			BlockHitResult result) {
 		int animation = lvl.getBlockState(pos).getValue(TofuPress2.anim);
 
-		if (!lvl.isClientSide && player.getItemInHand(hand).getItem() == ItemInit.SOYBEANS.get()
-				&& animation == 0
+		if (!lvl.isClientSide && player.getItemInHand(hand).getItem() == ItemInit.SOYBEANS.get() && animation == 0
 				&& lvl.getBlockEntity(pos) instanceof final TofuPressEntity2 tpress) {
-			player.getItemInHand(hand).shrink(1);
+			if (player.getItemInHand(hand).getCount() >= 4) {
+				player.getItemInHand(hand).shrink(4);
+			} else {
+				player.displayClientMessage(
+						Component.translatable("Must have at least 4 soybeans to make a batch of tofu"), true);
+				return InteractionResult.FAIL;
+			}
 			lvl.setBlockAndUpdate(pos, state.setValue(TofuPress2.anim, 1));
 			return InteractionResult.CONSUME;
 		} else if (!lvl.isClientSide && animation == 5
@@ -79,11 +85,12 @@ public class TofuPress2 extends TofuPress {
 			if (player.getItemInHand(hand) == ItemStack.EMPTY) {
 				player.setItemInHand(hand, tpress.returnItem(animation));
 			} else if (player.getItemInHand(hand).getItem() == ItemInit.TOFU.get()
-					&& player.getItemInHand(hand).getCount() <= 63) {
+					&& player.getItemInHand(hand).getCount() <= 61) {
 				player.getInventory().add(tpress.returnItem(animation));
 			} else {
-				player.drop(tpress.returnItem(animation), true);
+				player.addItem(tpress.returnItem(animation));
 			}
+			player.addItem(tpress.returnPulp(animation));
 			lvl.setBlockAndUpdate(pos, state.setValue(TofuPress2.anim, 0));
 			return InteractionResult.SUCCESS;
 		} else {

@@ -1,6 +1,7 @@
 package com.blueking6.springnions.init;
 
 import com.blueking6.springnions.springnions;
+import com.blueking6.springnions.blocks.OnionCrate;
 import com.blueking6.springnions.blocks.OnionShelf;
 import com.blueking6.springnions.blocks.TofuPress;
 import com.blueking6.springnions.blocks.TofuPress2;
@@ -9,7 +10,6 @@ import com.blueking6.springnions.blocks.TofuPressC;
 import com.blueking6.springnions.crops.Onion;
 import com.blueking6.springnions.crops.Soy;
 import com.blueking6.springnions.fluids.SoyMilkBlock;
-import com.blueking6.springnions.items.OnionCrate;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

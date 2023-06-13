@@ -1,6 +1,7 @@
 package com.blueking6.springnions.init;
 
 import com.blueking6.springnions.springnions;
+import com.blueking6.springnions.items.SoyPulp;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowlFoodItem;
@@ -18,12 +19,10 @@ public class ItemInit {
 			springnions.MOD_ID);
 
 	public static final RegistryObject<Item> ONION_CRATE = ITEMS.register("onion_crate",
-			() -> new ItemNameBlockItem(BlockInit.ONION_CRATE.get(),
-					new Item.Properties()));
+			() -> new ItemNameBlockItem(BlockInit.ONION_CRATE.get(), new Item.Properties()));
 
 	public static final RegistryObject<Item> ONION = ITEMS.register("onion",
-			() -> new ItemNameBlockItem(BlockInit.ONION_PLANT.get(),
-					new Item.Properties().food(FoodInit.ONION)));
+			() -> new ItemNameBlockItem(BlockInit.ONION_PLANT.get(), new Item.Properties().food(FoodInit.ONION)));
 
 	public static final RegistryObject<Item> SOYBEANS = ITEMS.register("soybeans",
 			() -> new ItemNameBlockItem(BlockInit.SOY_PLANT.get(), new Item.Properties()));
@@ -47,8 +46,7 @@ public class ItemInit {
 			() -> new BlockItem(BlockInit.ONION_SHELF.get(), new Item.Properties()));
 
 	public static final RegistryObject<Item> SOYMILK_BUCKET = ITEMS.register("soymilk_bucket",
-			() -> new BucketItem(FluidInit.SOYMILK,
-					new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+			() -> new BucketItem(FluidInit.SOYMILK, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
 	public static final RegistryObject<Item> TOFU = ITEMS.register("tofu",
 			() -> new Item(new Item.Properties().food(FoodInit.TOFU)));
@@ -61,12 +59,15 @@ public class ItemInit {
 
 	public static final RegistryObject<Item> TOFUPRESS2 = ITEMS.register("tofu_press2",
 			() -> new ItemNameBlockItem(BlockInit.TOFU_PRESS2.get(), new Item.Properties()));
-	
+
 	public static final RegistryObject<Item> TOFUPRESS3 = ITEMS.register("tofu_press3",
 			() -> new ItemNameBlockItem(BlockInit.TOFU_PRESS3.get(), new Item.Properties()));
-	
+
 	public static final RegistryObject<Item> TOFUPRESSC = ITEMS.register("tofu_pressc",
 			() -> new ItemNameBlockItem(BlockInit.TOFU_PRESSC.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> SOY_PULP = ITEMS.register("soy_pulp",
+			() -> new SoyPulp(new Item.Properties()));
 
 	public static void register(IEventBus eventBus) {
 		ITEMS.register(eventBus);
