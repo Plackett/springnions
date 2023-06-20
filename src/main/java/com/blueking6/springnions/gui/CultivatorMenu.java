@@ -18,24 +18,24 @@ import net.minecraftforge.items.SlotItemHandler;
 public class CultivatorMenu extends AbstractContainerMenu {
 
 	private final BlockPos pos;
-	private int SLOT_INPUT = CultivatorEntity.SLOT_INPUT;
-	private int SLOT_OUTPUT = CultivatorEntity.SLOT_OUTPUT;
-	private int SLOT_COUNT = CultivatorEntity.SLOT_COUNT;
+	private int SLOT_INPUT = 1;
+	private int SLOT_OUTPUT = 9;
+	private int SLOT_COUNT = 10;
 
 	public CultivatorMenu(int windowId, Player player, BlockPos pos) {
 		super(MenuInit.CULTIVATOR.get(), windowId);
 		this.pos = pos;
 		if (player.level().getBlockEntity(pos) instanceof CultivatorEntity cultivator) {
 			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 26));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 98, 7));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 117, 7));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 135, 7));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 98, 26));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 117, 26));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 135, 26));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 6, 98, 45));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 7, 117, 45));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 8, 135, 45));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 100, 7));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 118, 7));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 136, 7));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 100, 26));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 118, 26));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 136, 26));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 6, 100, 45));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 7, 118, 45));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 8, 136, 45));
 		}
 		layoutPlayerInventorySlots(player.getInventory(), 10, 70);
 	}

@@ -3,12 +3,8 @@ package com.blueking6.springnions.entities;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import org.jetbrains.annotations.NotNull;
-
 import com.blueking6.springnions.blocks.Cultivator;
 import com.blueking6.springnions.init.EntityInit;
-import com.blueking6.tools.AdaptedItemHandler;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -31,6 +27,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class CultivatorEntity extends BlockEntity implements MenuProvider {
 
+	// variables used for container creation and menu creation
 	public static final int SLOT_INPUT = 0;
 	public static final int SLOT_INPUT_COUNT = 1;
 
@@ -51,24 +48,22 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 		};
 	}
 
-	private final ItemStackHandler inputItems = createItemHandler(SLOT_INPUT_COUNT);
-	private final ItemStackHandler outputItems = createItemHandler(SLOT_OUTPUT_COUNT);
+	private final ItemStackHandler inputItems = new ItemStackHandler(1) {
+		@Override
+		protected void onContentsChanged(int slot) {
+			setChanged();
+		}
+	};
+	private final ItemStackHandler outputItems = new ItemStackHandler(9) {
+		@Override
+		protected void onContentsChanged(int slot) {
+			setChanged();
+		}
+	};
 	private final LazyOptional<IItemHandler> itemHandler = LazyOptional
 			.of(() -> new CombinedInvWrapper(inputItems, outputItems));
-	private final LazyOptional<IItemHandler> inputItemHandler = LazyOptional
-			.of(() -> new AdaptedItemHandler(inputItems) {
-				@Override
-				public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-					return ItemStack.EMPTY;
-				}
-			});
-	private final LazyOptional<IItemHandler> outputItemHandler = LazyOptional
-			.of(() -> new AdaptedItemHandler(outputItems) {
-				@Override
-				public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-					return stack;
-				}
-			});
+	private final LazyOptional<IItemHandler> inputItemHandler = LazyOptional.of(() -> inputItems);
+	private final LazyOptional<IItemHandler> outputItemHandler = LazyOptional.of(() -> outputItems);
 
 	public CultivatorEntity(BlockPos pos, BlockState state) {
 		super(EntityInit.CULTIVATOR.get(), pos, state);
@@ -156,7 +151,8 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 					outputItems.setStackInSlot(i, current);
 				}
 			}
-			// drop itemstack on the ground if it can't fit into the inventory of the machine
+			// drop itemstack on the ground if it can't fit into the inventory of the
+			// machine
 			if (item != ItemStack.EMPTY) {
 				this.getLevel().addFreshEntity(new ItemEntity(this.getLevel(), (double) this.getBlockPos().getX(),
 						(double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), item));
