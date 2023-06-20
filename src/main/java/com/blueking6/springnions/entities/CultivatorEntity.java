@@ -1,20 +1,15 @@
 package com.blueking6.springnions.entities;
 
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import com.blueking6.springnions.blocks.Cultivator;
 import com.blueking6.springnions.init.EntityInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
-public class CultivatorEntity extends BlockEntity implements MenuProvider {
+public class CultivatorEntity extends BlockEntity {
 
 	// variables used for container creation and menu creation
 	public static final int SLOT_INPUT = 0;
@@ -36,23 +31,23 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 
 	public static final int SLOT_COUNT = SLOT_INPUT_COUNT + SLOT_OUTPUT_COUNT;
 
-	private boolean cooldown = false;
-
-	@Nonnull
-	private ItemStackHandler createItemHandler(int slots) {
-		return new ItemStackHandler(slots) {
-			@Override
-			protected void onContentsChanged(int slot) {
-				setChanged();
-			}
-		};
-	}
+	public boolean cooldown = true;
+	private int tickmeasure;
 
 	private final ItemStackHandler inputItems = new ItemStackHandler(1) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			setChanged();
 		}
+
+		@Override
+		public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+			if (!stack.getItem().isFireResistant()) {
+				return ItemStack.EMPTY;
+			}
+			return stack;
+		}
+
 	};
 	private final ItemStackHandler outputItems = new ItemStackHandler(9) {
 		@Override
@@ -67,11 +62,6 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 
 	public CultivatorEntity(BlockPos pos, BlockState state) {
 		super(EntityInit.CULTIVATOR.get(), pos, state);
-	}
-
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Cultivator");
 	}
 
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -114,14 +104,22 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 	}
 
 	public void tick() {
-		if (!this.getLevel().isClientSide() && cooldown) {
-			if (Cultivator.isMature(this.getBlockState(), (ServerLevel) this.getLevel(),
+		tickmeasure++;
+		if (!this.getLevel().isClientSide() && cooldown == true) {
+			cooldown = false;
+			System.out.print("triggered");
+			if (Cultivator.isMature(this.getLevel().getBlockState(getBlockPos().above()), (ServerLevel) this.getLevel(),
 					this.getBlockPos().above()) == true) {
 				System.out.print("mature!");
 				this.getLevel().setBlockAndUpdate(this.getBlockPos().above(),
 						this.getLevel().getBlockState(this.getBlockPos().above()).getBlock().defaultBlockState());
-				attemptInsert(Cultivator.Harvest(getBlockState(), (ServerLevel) getLevel(), getBlockPos().above()));
+				attemptInsert(Cultivator.Harvest(getLevel().getBlockState(getBlockPos().above()),
+						(ServerLevel) getLevel(), getBlockPos().above()));
 			}
+		}
+		if (tickmeasure == 40) {
+			tickmeasure = 0;
+			cooldown = true;
 		}
 	}
 
@@ -140,9 +138,9 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 					item = ItemStack.EMPTY;
 					// check item count and see if you can add more to the stack
 				} else if (current.getItem() == item.getItem()
-						&& current.getItem().getMaxStackSize() > current.getCount()) {
-					if (current.getItem().getMaxStackSize() > current.getCount() + item.getCount()) {
-						current.setCount(current.getItem().getMaxStackSize());
+						&& current.getItem().getMaxStackSize() > current.getCount() + item.getCount()) {
+					if (current.getItem().getMaxStackSize() >= current.getCount() + item.getCount()) {
+						current.setCount(current.getCount() + item.getCount());
 						item = ItemStack.EMPTY;
 					} else {
 						item.setCount(item.getCount() - (current.getItem().getMaxStackSize() - current.getCount()));
@@ -158,11 +156,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 						(double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), item));
 			}
 		}
-	}
-
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inv, Player plr) {
-		return null;
+		this.getLevel().setBlockAndUpdate(getBlockPos(), getBlockState());
 	}
 
 	public ItemStackHandler getInputItems() {

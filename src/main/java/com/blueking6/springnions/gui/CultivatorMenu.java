@@ -18,21 +18,21 @@ import net.minecraftforge.items.SlotItemHandler;
 public class CultivatorMenu extends AbstractContainerMenu {
 
 	private final BlockPos pos;
-	private int SLOT_INPUT = 1;
-	private int SLOT_OUTPUT = 9;
+	private int SLOT_INPUT = 0;
+	private int SLOT_OUTPUT = 0;
 	private int SLOT_COUNT = 10;
 
 	public CultivatorMenu(int windowId, Player player, BlockPos pos) {
 		super(MenuInit.CULTIVATOR.get(), windowId);
 		this.pos = pos;
 		if (player.level().getBlockEntity(pos) instanceof CultivatorEntity cultivator) {
-			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 26));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 100, 7));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 118, 7));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 136, 7));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 100, 26));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 118, 26));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 136, 26));
+			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 28, 38));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 100, 9));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 118, 9));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 136, 9));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 100, 27));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 118, 27));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 136, 27));
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 6, 100, 45));
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 7, 118, 45));
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 8, 136, 45));

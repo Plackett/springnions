@@ -126,7 +126,8 @@ public class Cultivator extends Block implements EntityBlock {
 			return state.getValue(NetherWartBlock.AGE) == 3;
 			// for cactus, sugarcane, and bamboo
 		} else if (block.getBlock() == level.getBlockState(pos.above()).getBlock()) {
-			return true;
+			return (block.getBlock().equals(Blocks.SUGAR_CANE) || block.getBlock().equals(Blocks.CACTUS)
+					|| block.getBlock().equals(Blocks.BAMBOO));
 			// for pumpkins and melons
 		} else if (block.getBlock() instanceof MelonBlock || block.getBlock() instanceof PumpkinBlock) {
 			return true;
