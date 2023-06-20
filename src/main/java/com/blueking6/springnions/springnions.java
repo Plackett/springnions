@@ -9,6 +9,7 @@ import com.blueking6.config.SpringnionsClientConfigs;
 import com.blueking6.config.SpringnionsCommonConfigs;
 import com.blueking6.springnions.datagen.AdvancementGen;
 import com.blueking6.springnions.datagen.RecipeGen;
+import com.blueking6.springnions.gui.CultivatorScreen;
 import com.blueking6.springnions.init.BlockInit;
 import com.blueking6.springnions.init.CreativeTabInit;
 import com.blueking6.springnions.init.FluidInit;
@@ -18,6 +19,7 @@ import com.blueking6.springnions.init.SoundInit;
 import com.blueking6.springnions.init.EntityInit;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.HolderLookup;
@@ -122,6 +124,9 @@ public class springnions {
 		ItemBlockRenderTypes.setRenderLayer(BlockInit.SOY_PLANT.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(BlockInit.ONION_SHELF.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(BlockInit.TOFU_PRESS.get(), RenderType.cutoutMipped());
+		event.enqueueWork(() -> {
+			MenuScreens.register(MenuInit.CULTIVATOR.get(), CultivatorScreen::new);
+		});
 	}
 
 	public void loadComplete(FMLLoadCompleteEvent event) {

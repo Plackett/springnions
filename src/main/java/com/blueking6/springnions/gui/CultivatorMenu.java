@@ -4,133 +4,111 @@ import com.blueking6.springnions.entities.CultivatorEntity;
 import com.blueking6.springnions.init.BlockInit;
 import com.blueking6.springnions.init.MenuInit;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
+//heavily copied code from McJty's tutorials
 public class CultivatorMenu extends AbstractContainerMenu {
 
-	public final CultivatorEntity blockEntity;
-	private final Level level;
-	private ContainerData data = null;
+	private final BlockPos pos;
+	private int SLOT_INPUT = CultivatorEntity.SLOT_INPUT;
+	private int SLOT_OUTPUT = CultivatorEntity.SLOT_OUTPUT;
+	private int SLOT_COUNT = CultivatorEntity.SLOT_COUNT;
 
-	public CultivatorMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		this(id, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(10));
+	public CultivatorMenu(int windowId, Player player, BlockPos pos) {
+		super(MenuInit.CULTIVATOR.get(), windowId);
+		this.pos = pos;
+		if (player.level().getBlockEntity(pos) instanceof CultivatorEntity cultivator) {
+			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 26));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 98, 7));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 117, 7));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 135, 7));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 98, 26));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 117, 26));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 135, 26));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 6, 98, 45));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 7, 117, 45));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 8, 135, 45));
+		}
+		layoutPlayerInventorySlots(player.getInventory(), 10, 70);
 	}
 
-	public CultivatorMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-		super(MenuInit.HARVESTER.get(), id);
-		checkContainerSize(inv, 10);
-		blockEntity = (CultivatorEntity) entity;
-		this.level = inv.player.level();
-		this.data = data;
-
-		addPlayerInventory(inv);
-		addPlayerHotbar(inv);
-
-		this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-			this.addSlot(new SlotItemHandler(handler, 0, 12, 15));
-			this.addSlot(new SlotItemHandler(handler, 1, 86, 15));
-			this.addSlot(new SlotItemHandler(handler, 2, 86, 21));
-			this.addSlot(new SlotItemHandler(handler, 3, 86, 37));
-			this.addSlot(new SlotItemHandler(handler, 4, 70, 15));
-			this.addSlot(new SlotItemHandler(handler, 5, 70, 21));
-			this.addSlot(new SlotItemHandler(handler, 6, 70, 37));
-			this.addSlot(new SlotItemHandler(handler, 7, 54, 15));
-			this.addSlot(new SlotItemHandler(handler, 8, 54, 21));
-			this.addSlot(new SlotItemHandler(handler, 9, 54, 37));
-		});
-
-		addDataSlots(data);
+	private int addSlotRange(Container playerInventory, int index, int x, int y, int amount, int dx) {
+		for (int i = 0; i < amount; i++) {
+			addSlot(new Slot(playerInventory, index, x, y));
+			x += dx;
+			index++;
+		}
+		return index;
 	}
 
-	// CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
-	// must assign a slot number to each of the slots used by the GUI.
-	// For this container, we can see both the tile inventory's slots as well as the
-	// player inventory slots and the hotbar.
-	// Each time we add a Slot to the container, it automatically increases the
-	// slotIndex, which means
-	// 0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 -
-	// 8)
-	// 9 - 35 = player inventory slots (which map to the InventoryPlayer slot
-	// numbers 9 - 35)
-	// 36 - 44 = TileInventory slots, which map to our TileEntity slot numbers 0 -
-	// 8)
-	private static final int HOTBAR_SLOT_COUNT = 9;
-	private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
-	private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
-	private static final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
-	private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
-	private static final int VANILLA_FIRST_SLOT_INDEX = 0;
-	private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
+	private int addSlotBox(Container playerInventory, int index, int x, int y, int horAmount, int dx, int verAmount,
+			int dy) {
+		for (int j = 0; j < verAmount; j++) {
+			index = addSlotRange(playerInventory, index, x, y, horAmount, dx);
+			y += dy;
+		}
+		return index;
+	}
 
-	// THIS YOU HAVE TO DEFINE!
-	private static final int TE_INVENTORY_SLOT_COUNT = 10; // must be the number of slots you have!
+	private void layoutPlayerInventorySlots(Container playerInventory, int leftCol, int topRow) {
+		// Player inventory
+		addSlotBox(playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
+
+		// Hotbar
+		topRow += 58;
+		addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+	}
 
 	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {
-		Slot sourceSlot = slots.get(index);
-		if (sourceSlot == null || !sourceSlot.hasItem())
-			return ItemStack.EMPTY; // EMPTY_ITEM
-		ItemStack sourceStack = sourceSlot.getItem();
-		ItemStack copyOfSourceStack = sourceStack.copy();
-
-		// Check if the slot clicked is one of the vanilla container slots
-		if (index < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
-			// This is a vanilla container slot so merge the stack into the tile inventory
-			if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX,
-					TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT, false)) {
-				return ItemStack.EMPTY; // EMPTY_ITEM
+	public ItemStack quickMoveStack(Player player, int index) {
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = this.slots.get(index);
+		if (slot.hasItem()) {
+			ItemStack stack = slot.getItem();
+			itemstack = stack.copy();
+			if (index < SLOT_COUNT) {
+				if (!this.moveItemStackTo(stack, SLOT_COUNT, Inventory.INVENTORY_SIZE + SLOT_COUNT, true)) {
+					return ItemStack.EMPTY;
+				}
 			}
-		} else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
-			// This is a TE slot so merge the stack into the players inventory
-			if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT,
-					false)) {
+			if (!this.moveItemStackTo(stack, SLOT_INPUT, SLOT_INPUT + 1, false)) {
+				if (index < 27 + SLOT_COUNT) {
+					if (!this.moveItemStackTo(stack, 27 + SLOT_COUNT, 36 + SLOT_COUNT, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index < Inventory.INVENTORY_SIZE + SLOT_COUNT
+						&& !this.moveItemStackTo(stack, SLOT_COUNT, 27 + SLOT_COUNT, false)) {
+					return ItemStack.EMPTY;
+				}
+			}
+
+			if (stack.isEmpty()) {
+				slot.set(ItemStack.EMPTY);
+			} else {
+				slot.setChanged();
+			}
+
+			if (stack.getCount() == itemstack.getCount()) {
 				return ItemStack.EMPTY;
 			}
-		} else {
-			System.out.println("Invalid slotIndex:" + index);
-			return ItemStack.EMPTY;
+
+			slot.onTake(player, stack);
 		}
-		// If stack size == 0 (the entire stack was moved) set slot contents to null
-		if (sourceStack.getCount() == 0) {
-			sourceSlot.set(ItemStack.EMPTY);
-		} else {
-			sourceSlot.setChanged();
-		}
-		sourceSlot.onTake(playerIn, sourceStack);
-		return copyOfSourceStack;
+
+		return itemstack;
 	}
 
 	@Override
 	public boolean stillValid(Player player) {
-		return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player,
-				BlockInit.CULTIVATOR.get());
-	}
-
-	private void addPlayerInventory(Inventory playerInventory) {
-		for (int i = 0; i < 3; ++i) {
-			for (int l = 0; l < 9; ++l) {
-				this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
-			}
-		}
-	}
-
-	private void addPlayerHotbar(Inventory playerInventory) {
-		for (int i = 0; i < 9; ++i) {
-			this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
-		}
+		return stillValid(ContainerLevelAccess.create(player.level(), pos), player, BlockInit.CULTIVATOR.get());
 	}
 
 }

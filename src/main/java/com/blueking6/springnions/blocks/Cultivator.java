@@ -1,14 +1,23 @@
 package com.blueking6.springnions.blocks;
 
+import java.util.List;
+
 import com.blueking6.springnions.entities.CultivatorEntity;
+import com.blueking6.springnions.gui.CultivatorMenu;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -65,7 +74,7 @@ public class Cultivator extends Block implements EntityBlock {
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
 		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
-	
+
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
@@ -83,25 +92,28 @@ public class Cultivator extends Block implements EntityBlock {
 		if (!lvl.isClientSide()) {
 			BlockEntity entity = lvl.getBlockEntity(pos);
 			if (entity instanceof CultivatorEntity) {
-				NetworkHooks.openScreen(((ServerPlayer) plr), (CultivatorEntity) entity, pos);
-			} else {
-				throw new IllegalStateException("uh, the menu doesnt exist?");
+				MenuProvider containerProvider = new MenuProvider() {
+					@Override
+					public Component getDisplayName() {
+						return Component.literal("Cultivator");
+					}
+
+					@Override
+					public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory,
+							Player playerEntity) {
+						return new CultivatorMenu(windowId, playerEntity, pos);
+					}
+				};
+				NetworkHooks.openScreen((ServerPlayer) plr, containerProvider, entity.getBlockPos());
 			}
 		}
 
 		return InteractionResult.sidedSuccess(lvl.isClientSide());
 	}
 
-	@Override
-	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource src) {
-		if (isMature(state, level, pos.above())) {
-			System.out.print("mature!");
-		}
-	}
-
 	// I cant take credit for this function since I used Industrial Foregoing's
 	// API as inspiration for writing it, check it out at their github to compare!
-	public boolean isMature(BlockState state, ServerLevel level, BlockPos pos) {
+	public static boolean isMature(BlockState state, ServerLevel level, BlockPos pos) {
 		BlockState block = level.getBlockState(pos);
 		// for regular crops
 		if (block.getBlock() instanceof CropBlock) {
@@ -139,6 +151,46 @@ public class Cultivator extends Block implements EntityBlock {
 				h.tick();
 			}
 		};
+	}
+
+	// also based on industrial foregoing but more original code to combine their
+	// blockutils and harvesting code, harvests blocks and returns drops.
+	public static List<ItemStack> Harvest(BlockState state, ServerLevel lvl, BlockPos pos) {
+		BlockState block = lvl.getBlockState(pos);
+		NonNullList<ItemStack> items = NonNullList.create();
+		// for regular crops
+		if (block.getBlock() instanceof CropBlock) {
+			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			// for berry bushes
+		} else if (state.hasProperty(SweetBerryBushBlock.AGE)) {
+			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			// for nether wart
+		} else if (block.getBlock() instanceof NetherWartBlock) {
+			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			// for cactus, sugarcane, and bamboo
+		} else if (block.getBlock() == lvl.getBlockState(pos.above()).getBlock()) {
+			items.addAll(Block.getDrops(state, lvl, pos.above(2), lvl.getBlockEntity(pos)));
+			items.addAll(Block.getDrops(state, lvl, pos.above(), lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
+			if (block.getBlock() == Blocks.BAMBOO) {
+				lvl.setBlockAndUpdate(pos, Blocks.BAMBOO_SAPLING.defaultBlockState());
+			} else {
+				lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			}
+			// for pumpkins and melons
+		} else if (block.getBlock() instanceof MelonBlock || block.getBlock() instanceof PumpkinBlock) {
+			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+			// for kelp
+		} else if (block.getBlock() == Blocks.KELP_PLANT || block.getBlock() == Blocks.KELP) {
+			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos.above(), Blocks.WATER.defaultBlockState());
+			lvl.setBlockAndUpdate(pos, Blocks.KELP_PLANT.defaultBlockState());
+		}
+		return items;
 	}
 
 }
