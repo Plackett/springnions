@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "springnions:block/cultivator" },
+    "facing=south": { "model": "springnions:block/cultivator", "y":  180},
+    "facing=west": { "model": "springnions:block/cultivator", "y":  270},
+    "facing=east": { "model": "springnions:block/cultivator", "y":  90}
+  }
+}

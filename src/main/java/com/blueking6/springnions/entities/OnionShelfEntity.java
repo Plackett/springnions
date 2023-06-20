@@ -1,6 +1,6 @@
-package com.blueking6.springnions.blocks;
+package com.blueking6.springnions.entities;
 
-import com.blueking6.springnions.init.TileEntityInit;
+import com.blueking6.springnions.init.EntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,13 +16,13 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class OnionShelfTile extends BlockEntity {
+public class OnionShelfEntity extends BlockEntity {
 
 	protected final ItemStackHandler inventory;
 	protected LazyOptional<ItemStackHandler> handler;
 
-	public OnionShelfTile(BlockPos pos, BlockState state) {
-		super(TileEntityInit.ONION_SHELF.get(), pos, state);
+	public OnionShelfEntity(BlockPos pos, BlockState state) {
+		super(EntityInit.ONION_SHELF.get(), pos, state);
 
 		this.inventory = createInventory();
 		this.handler = LazyOptional.of(() -> this.inventory);
@@ -112,7 +112,7 @@ public class OnionShelfTile extends BlockEntity {
 		return ItemStack.EMPTY;
 	}
 
-	public int getNumberOfItems(Level level, BlockPos pos, OnionShelfTile shelf) {
+	public int getNumberOfItems(Level level, BlockPos pos, OnionShelfEntity shelf) {
 		int v = 0;
 		for (int i = 0; i < 8; i++) {
 			if (this.inventory.getStackInSlot(i).isEmpty() == false) {

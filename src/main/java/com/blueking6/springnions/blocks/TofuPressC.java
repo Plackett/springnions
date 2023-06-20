@@ -3,8 +3,9 @@ package com.blueking6.springnions.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.blueking6.springnions.entities.TofuPressEntityC;
 import com.blueking6.springnions.init.ItemInit;
-import com.blueking6.springnions.init.TileEntityInit;
+import com.blueking6.springnions.init.EntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -50,7 +51,7 @@ public class TofuPressC extends TofuPress {
 	
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return TileEntityInit.TOFU_PRESSC.get().create(pos, state);
+		return EntityInit.TOFU_PRESSC.get().create(pos, state);
 	}
 
 	@Override

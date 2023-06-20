@@ -1,6 +1,7 @@
 package com.blueking6.springnions.init;
 
 import com.blueking6.springnions.springnions;
+import com.blueking6.springnions.blocks.Cultivator;
 import com.blueking6.springnions.blocks.OnionCrate;
 import com.blueking6.springnions.blocks.OnionShelf;
 import com.blueking6.springnions.blocks.TofuPress;
@@ -48,6 +49,7 @@ public class BlockInit {
 
 	public static final RegistryObject<Block> SOY_PLANT = BLOCKS.register("soy_plant",
 			() -> new Soy(BlockBehaviour.Properties.copy(Blocks.CARROTS).noOcclusion()));
+	public static final RegistryObject<Block> CULTIVATOR = BLOCKS.register("cultivator", () -> new Cultivator(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.BLOCK).noOcclusion().strength(1f)));
 
 	public static void register(IEventBus eventBus) {
 		BLOCKS.register(eventBus);

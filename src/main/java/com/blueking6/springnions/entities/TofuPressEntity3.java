@@ -1,11 +1,13 @@
-package com.blueking6.springnions.blocks;
+package com.blueking6.springnions.entities;
 
 import org.jetbrains.annotations.NotNull;
 
 import com.blueking6.config.SpringnionsCommonConfigs;
+import com.blueking6.springnions.blocks.TofuPress3;
+import com.blueking6.springnions.blocks.TofuPressC;
 import com.blueking6.springnions.init.ItemInit;
 import com.blueking6.springnions.init.SoundInit;
-import com.blueking6.springnions.init.TileEntityInit;
+import com.blueking6.springnions.init.EntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,22 +24,22 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TofuPressEntity2 extends BlockEntity {
+public class TofuPressEntity3 extends BlockEntity {
 
 	protected final ItemStackHandler inventory;
 	protected LazyOptional<ItemStackHandler> handler;
 	private int progressc = 0;
 
-	public TofuPressEntity2(BlockPos pos, BlockState state) {
-		super(TileEntityInit.TOFU_PRESS2.get(), pos, state);
+	public TofuPressEntity3(BlockPos pos, BlockState state) {
+		super(EntityInit.TOFU_PRESS3.get(), pos, state);
 
 		this.inventory = createInventory();
 		this.handler = LazyOptional.of(() -> this.inventory);
 	}
 
 	public void tick() {
-		int animation = getBlockState().getValue(TofuPress2.anim);
-		int powerlvl = getBlockState().getValue(TofuPress2.power);
+		int animation = getBlockState().getValue(TofuPress3.anim);
+		int powerlvl = getBlockState().getValue(TofuPress3.power);
 		if (this.level == null) {
 			return;
 		}
@@ -50,7 +52,7 @@ public class TofuPressEntity2 extends BlockEntity {
 				}
 				this.progressc = 0;
 				this.level.setBlockAndUpdate(this.getBlockPos(),
-						getBlockState().setValue(TofuPress2.anim, animation + 1));
+						getBlockState().setValue(TofuPress3.anim, animation + 1));
 			}
 			if (animation != 0 && animation != 5) {
 				this.progressc++;
@@ -59,13 +61,13 @@ public class TofuPressEntity2 extends BlockEntity {
 			}
 		}
 		if (this.level.getGameTime() % 100 == 0) {
-			TofuPress2.powerCheck2(this.level, this.getBlockPos());
+			TofuPress3.powerCheck3(this.level, this.getBlockPos());
 		}
 		if (this.inventory.getStackInSlot(0).getItem() == ItemInit.SOYBEANS.get()
 				&& this.inventory.getStackInSlot(1).getItem() == ItemInit.SOYBEANS.get()
 				&& this.inventory.getStackInSlot(2).getItem() == ItemInit.SOYBEANS.get()
 				&& this.inventory.getStackInSlot(3).getItem() == ItemInit.SOYBEANS.get() && animation == 0) {
-			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPress2.anim, 1));
+			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPress3.anim, 1));
 		} else if (this.inventory.getStackInSlot(0) == ItemStack.EMPTY && animation == 1) {
 			this.inventory.setStackInSlot(0, new ItemStack(ItemInit.SOYBEANS.get(), 1));
 			this.inventory.setStackInSlot(1, new ItemStack(ItemInit.SOYBEANS.get(), 1));
@@ -80,7 +82,7 @@ public class TofuPressEntity2 extends BlockEntity {
 				&& this.inventory.getStackInSlot(1) == ItemStack.EMPTY
 				&& this.inventory.getStackInSlot(2) == ItemStack.EMPTY
 				&& this.inventory.getStackInSlot(3) == ItemStack.EMPTY) {
-			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPress2.anim, 0));
+			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPress3.anim, 0));
 		}
 	}
 
@@ -154,7 +156,7 @@ public class TofuPressEntity2 extends BlockEntity {
 			// only insert if it is soybeans and reject other items
 			@Override
 			public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-				if (stack.getItem() == ItemInit.SOYBEANS.get() && getBlockState().getValue(TofuPress2.anim) == 0) {
+				if (stack.getItem() == ItemInit.SOYBEANS.get() && getBlockState().getValue(TofuPress3.anim) == 0) {
 					return super.insertItem(slot, stack, simulate);
 				} else {
 					return stack;
@@ -201,7 +203,7 @@ public class TofuPressEntity2 extends BlockEntity {
 		}
 	}
 
-	public int getNumberOfItems(Level level, BlockPos pos, TofuPressEntity2 tpress) {
+	public int getNumberOfItems(Level level, BlockPos pos, TofuPressEntity3 tpress) {
 		int v = 0;
 		if (this.inventory.getStackInSlot(0).isEmpty() == false) {
 			v++;

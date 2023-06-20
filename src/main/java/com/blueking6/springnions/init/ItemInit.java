@@ -65,6 +65,8 @@ public class ItemInit {
 
 	public static final RegistryObject<Item> TOFUPRESSC = ITEMS.register("tofu_pressc",
 			() -> new ItemNameBlockItem(BlockInit.TOFU_PRESSC.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> CULTIVATOR = ITEMS.register("cultivator", () -> new ItemNameBlockItem(BlockInit.CULTIVATOR.get(), new Item.Properties()));
 
 	public static final RegistryObject<Item> SOY_PULP = ITEMS.register("soy_pulp",
 			() -> new SoyPulp(new Item.Properties()));

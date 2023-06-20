@@ -3,8 +3,9 @@ package com.blueking6.springnions.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.blueking6.springnions.entities.TofuPressEntity3;
 import com.blueking6.springnions.init.ItemInit;
-import com.blueking6.springnions.init.TileEntityInit;
+import com.blueking6.springnions.init.EntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -61,7 +62,7 @@ public class TofuPress3 extends TofuPress {
 	
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return TileEntityInit.TOFU_PRESS3.get().create(pos, state);
+		return EntityInit.TOFU_PRESS3.get().create(pos, state);
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class TofuPress3 extends TofuPress {
 					&& player.getItemInHand(hand).getCount() <= 61) {
 				player.getInventory().add(tpress.returnItem(animation));
 			} else {
-				player.addItem(tpress.returnItem(animation));
+				player.addItem(tpress.returnPulp(animation));
 			}
 			player.addItem(tpress.returnPulp(animation));
 			lvl.setBlockAndUpdate(pos, state.setValue(TofuPress3.anim, 0));

@@ -13,8 +13,9 @@ import com.blueking6.springnions.init.BlockInit;
 import com.blueking6.springnions.init.CreativeTabInit;
 import com.blueking6.springnions.init.FluidInit;
 import com.blueking6.springnions.init.ItemInit;
+import com.blueking6.springnions.init.MenuInit;
 import com.blueking6.springnions.init.SoundInit;
-import com.blueking6.springnions.init.TileEntityInit;
+import com.blueking6.springnions.init.EntityInit;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -76,6 +77,7 @@ public class springnions {
 			event.accept(ItemInit.HYDROCHIP2.get());
 			event.accept(ItemInit.HYDROCHIP3.get());
 			event.accept(ItemInit.SOY_PULP.get());
+			event.accept(ItemInit.CULTIVATOR.get());
 		}
 	}
 
@@ -94,10 +96,11 @@ public class springnions {
 
 		ItemInit.register(bus);
 		BlockInit.register(bus);
-		TileEntityInit.register(bus);
+		EntityInit.register(bus);
 		FluidInit.register(bus);
 		SoundInit.register(bus);
 		CreativeTabInit.register(bus);
+		MenuInit.register(bus);
 
 		bus.addListener(this::clientSetup);
 		bus.addListener(this::loadComplete);

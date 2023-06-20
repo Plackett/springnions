@@ -5,8 +5,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.blueking6.springnions.entities.OnionShelfEntity;
 import com.blueking6.springnions.init.ItemInit;
-import com.blueking6.springnions.init.TileEntityInit;
+import com.blueking6.springnions.init.EntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -43,7 +44,7 @@ public class OnionShelf extends Block implements EntityBlock {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return TileEntityInit.ONION_SHELF.get().create(pos, state);
+		return EntityInit.ONION_SHELF.get().create(pos, state);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class OnionShelf extends Block implements EntityBlock {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			if (!level.isClientSide && level.getBlockEntity(pos) instanceof final OnionShelfTile shelf) {
+			if (!level.isClientSide && level.getBlockEntity(pos) instanceof final OnionShelfEntity shelf) {
 				if (player.getItemInHand(hand).is(ItemInit.ONION_CRATE.get())) {
 					player.setItemInHand(hand, shelf.appendItem(player.getItemInHand(hand)));
 				} else {

@@ -1,10 +1,13 @@
-package com.blueking6.springnions.blocks;
+package com.blueking6.springnions.entities;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.blueking6.config.SpringnionsCommonConfigs;
+import com.blueking6.springnions.blocks.TofuPress;
+import com.blueking6.springnions.blocks.TofuPressC;
 import com.blueking6.springnions.init.ItemInit;
 import com.blueking6.springnions.init.SoundInit;
-import com.blueking6.springnions.init.TileEntityInit;
+import com.blueking6.springnions.init.EntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,35 +24,35 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TofuPressEntityC extends BlockEntity {
+public class TofuPressEntity extends BlockEntity {
 
 	protected final ItemStackHandler inventory;
 	protected LazyOptional<ItemStackHandler> handler;
 	private int progressc = 0;
 
-	public TofuPressEntityC(BlockPos pos, BlockState state) {
-		super(TileEntityInit.TOFU_PRESSC.get(), pos, state);
+	public TofuPressEntity(BlockPos pos, BlockState state) {
+		super(EntityInit.TOFU_PRESS.get(), pos, state);
 
 		this.inventory = createInventory();
 		this.handler = LazyOptional.of(() -> this.inventory);
 	}
 
 	public void tick() {
-		int animation = getBlockState().getValue(TofuPressC.anim);
-		int powerlvl = getBlockState().getValue(TofuPressC.power);
+		int animation = getBlockState().getValue(TofuPress.anim);
+		int powerlvl = getBlockState().getValue(TofuPress.power);
 		if (this.level == null) {
 			return;
 		}
 		// update stuff for processing item
 		if (!this.level.isClientSide && powerlvl >= 1 && animation >= 1) {
-			if (this.progressc >= 50 / powerlvl && animation <= 4) {
+			if (this.progressc >= SpringnionsCommonConfigs.TOFU_PRESS_SPEED.get() / powerlvl && animation <= 4) {
 				if (animation == 1 || animation == 3) {
 					this.level.playSound(null, this.getBlockPos(), SoundInit.TOFU_PRESS_PROCESS.get(),
 							SoundSource.BLOCKS, 0.5f, 1f);
 				}
 				this.progressc = 0;
 				this.level.setBlockAndUpdate(this.getBlockPos(),
-						getBlockState().setValue(TofuPressC.anim, animation + 1));
+						getBlockState().setValue(TofuPress.anim, animation + 1));
 			}
 			if (animation != 0 && animation != 5) {
 				this.progressc++;
@@ -58,13 +61,13 @@ public class TofuPressEntityC extends BlockEntity {
 			}
 		}
 		if (this.level.getGameTime() % 100 == 0) {
-			TofuPressC.powerCheckC(this.level, this.getBlockPos());
+			TofuPress.powerCheck(this.level, this.getBlockPos());
 		}
 		if (this.inventory.getStackInSlot(0).getItem() == ItemInit.SOYBEANS.get()
 				&& this.inventory.getStackInSlot(1).getItem() == ItemInit.SOYBEANS.get()
 				&& this.inventory.getStackInSlot(2).getItem() == ItemInit.SOYBEANS.get()
 				&& this.inventory.getStackInSlot(3).getItem() == ItemInit.SOYBEANS.get() && animation == 0) {
-			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPressC.anim, 1));
+			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPress.anim, 1));
 		} else if (this.inventory.getStackInSlot(0) == ItemStack.EMPTY && animation == 1) {
 			this.inventory.setStackInSlot(0, new ItemStack(ItemInit.SOYBEANS.get(), 1));
 			this.inventory.setStackInSlot(1, new ItemStack(ItemInit.SOYBEANS.get(), 1));
@@ -79,7 +82,7 @@ public class TofuPressEntityC extends BlockEntity {
 				&& this.inventory.getStackInSlot(1) == ItemStack.EMPTY
 				&& this.inventory.getStackInSlot(2) == ItemStack.EMPTY
 				&& this.inventory.getStackInSlot(3) == ItemStack.EMPTY) {
-			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPressC.anim, 0));
+			this.level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TofuPress.anim, 0));
 		}
 	}
 
@@ -153,7 +156,7 @@ public class TofuPressEntityC extends BlockEntity {
 			// only insert if it is soybeans and reject other items
 			@Override
 			public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-				if (stack.getItem() == ItemInit.SOYBEANS.get() && getBlockState().getValue(TofuPressC.anim) == 0) {
+				if (stack.getItem() == ItemInit.SOYBEANS.get() && getBlockState().getValue(TofuPress.anim) == 0) {
 					return super.insertItem(slot, stack, simulate);
 				} else {
 					return stack;
@@ -200,7 +203,7 @@ public class TofuPressEntityC extends BlockEntity {
 		}
 	}
 
-	public int getNumberOfItems(Level level, BlockPos pos, TofuPressEntityC tpress) {
+	public int getNumberOfItems(Level level, BlockPos pos, TofuPressEntity tpress) {
 		int v = 0;
 		if (this.inventory.getStackInSlot(0).isEmpty() == false) {
 			v++;
