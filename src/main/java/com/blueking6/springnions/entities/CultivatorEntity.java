@@ -122,34 +122,25 @@ public class CultivatorEntity extends BlockEntity {
 	}
 
 	// attempt to insert items into a container
-	@SuppressWarnings("deprecation")
 	public void attemptInsert(List<ItemStack> itemlist) {
 		// loop through all items
 		for (int v = 0; v < itemlist.size(); v++) {
 			ItemStack item = itemlist.get(v);
+			System.out.print(item.getDisplayName());
 			// loop through all slots
 			for (int i = 0; i < SLOT_OUTPUT_COUNT; i++) {
-				ItemStack current = outputItems.getStackInSlot(i);
-				// just add item if the slot is empty
-				if (outputItems.getStackInSlot(i).isEmpty()) {
-					outputItems.setStackInSlot(i, item);
-					item = ItemStack.EMPTY;
-					// check item count and see if you can add more to the stack
-				} else if (current.getItem() == item.getItem()
-						&& current.getItem().getMaxStackSize() > current.getCount() + item.getCount()) {
-					if (current.getItem().getMaxStackSize() >= current.getCount() + item.getCount()) {
-						current.setCount(current.getCount() + item.getCount());
-						item = ItemStack.EMPTY;
-					} else {
-						item.setCount(item.getCount() - (current.getItem().getMaxStackSize() - current.getCount()));
-						current.setCount(current.getItem().getMaxStackSize());
-					}
-					outputItems.setStackInSlot(i, current);
+				// actually attempting to insert the item
+				item = outputItems.insertItem(i, item, true);
+				System.out.print(item.getDisplayName() + "attempted");
+				// stop looping if nothing is left to insert
+				if (item.isEmpty()) {
+					System.out.print(item.getDisplayName() + "break");
+					break;
 				}
 			}
 			// drop itemstack on the ground if it can't fit into the inventory of the
 			// machine
-			if (item != ItemStack.EMPTY) {
+			if (!item.isEmpty()) {
 				System.out.print(item.getDisplayName());
 				this.getLevel().addFreshEntity(new ItemEntity(this.getLevel(), (double) this.getBlockPos().getX(),
 						(double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), item));
