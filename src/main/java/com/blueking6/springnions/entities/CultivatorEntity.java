@@ -107,10 +107,8 @@ public class CultivatorEntity extends BlockEntity {
 		tickmeasure++;
 		if (!this.getLevel().isClientSide() && cooldown == true) {
 			cooldown = false;
-			System.out.print("triggered");
 			if (Cultivator.isMature(this.getLevel().getBlockState(getBlockPos().above()), (ServerLevel) this.getLevel(),
 					this.getBlockPos().above()) == true) {
-				System.out.print("mature!");
 				this.getLevel().setBlockAndUpdate(this.getBlockPos().above(),
 						this.getLevel().getBlockState(this.getBlockPos().above()).getBlock().defaultBlockState());
 				attemptInsert(Cultivator.Harvest(getLevel().getBlockState(getBlockPos().above()),
@@ -133,7 +131,7 @@ public class CultivatorEntity extends BlockEntity {
 			for (int i = 0; i < SLOT_OUTPUT_COUNT; i++) {
 				ItemStack current = outputItems.getStackInSlot(i);
 				// just add item if the slot is empty
-				if (current == ItemStack.EMPTY) {
+				if (outputItems.getStackInSlot(i).isEmpty()) {
 					outputItems.setStackInSlot(i, item);
 					item = ItemStack.EMPTY;
 					// check item count and see if you can add more to the stack
@@ -152,6 +150,7 @@ public class CultivatorEntity extends BlockEntity {
 			// drop itemstack on the ground if it can't fit into the inventory of the
 			// machine
 			if (item != ItemStack.EMPTY) {
+				System.out.print(item.getDisplayName());
 				this.getLevel().addFreshEntity(new ItemEntity(this.getLevel(), (double) this.getBlockPos().getX(),
 						(double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), item));
 			}

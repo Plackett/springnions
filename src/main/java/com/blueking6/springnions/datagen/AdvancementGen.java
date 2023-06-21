@@ -63,7 +63,7 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 						.addRecipe(new ResourceLocation("springnions:onion")))
 				.save(saver, new ResourceLocation(springnions.MOD_ID, "onion_planter"), existingFileHelper);
 
-		Advancement.Builder.advancement()
+		Advancement gold = Advancement.Builder.advancement()
 				.display(ItemInit.GOLDEN_ONION.get(), Component.translatable("Not A Twilight Reference"),
 						Component.translatable("Obtain the fabled: Golden Onion."),
 						new ResourceLocation("springnions:textures/block/onion_shelf.png"), FrameType.CHALLENGE, true,
@@ -106,6 +106,14 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 				.addCriterion("has_press", InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.TOFUPRESS3.get()))
 				.parent(press)
 				.save(saver, new ResourceLocation(springnions.MOD_ID, "maximum_overdrive"), existingFileHelper);
+
+		Advancement.Builder.advancement()
+				.display(ItemInit.CULTIVATOR.get(), Component.translatable("This Is The World Now"),
+						Component.translatable("Achieve ultimate automation for your plants... At a price."),
+						new ResourceLocation("springnions:textures/block/onion_shelf.png"), FrameType.CHALLENGE, true,
+						true, true)
+				.addCriterion("has_cult", InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.CULTIVATOR.get()))
+				.parent(gold).save(saver, new ResourceLocation(springnions.MOD_ID, "cultivator"), existingFileHelper);
 
 	}
 

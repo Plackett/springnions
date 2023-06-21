@@ -174,7 +174,7 @@ public class Cultivator extends Block implements EntityBlock {
 			// for cactus, sugarcane, and bamboo
 		} else if (block.getBlock() == lvl.getBlockState(pos.above()).getBlock()) {
 			items.addAll(Block.getDrops(state, lvl, pos.above(2), lvl.getBlockEntity(pos)));
-			items.addAll(Block.getDrops(state, lvl, pos.above(), lvl.getBlockEntity(pos)));
+			items.addAll(Block.getDrops(state, lvl, pos.above(1), lvl.getBlockEntity(pos)));
 			lvl.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
 			if (block.getBlock() == Blocks.BAMBOO) {
 				lvl.setBlockAndUpdate(pos, Blocks.BAMBOO_SAPLING.defaultBlockState());
@@ -187,9 +187,9 @@ public class Cultivator extends Block implements EntityBlock {
 			lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			// for kelp
 		} else if (block.getBlock() == Blocks.KELP_PLANT || block.getBlock() == Blocks.KELP) {
-			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			items.addAll(Block.getDrops(state, lvl, pos.above(), lvl.getBlockEntity(pos.above())));
 			lvl.setBlockAndUpdate(pos.above(), Blocks.WATER.defaultBlockState());
-			lvl.setBlockAndUpdate(pos, Blocks.KELP_PLANT.defaultBlockState());
+			lvl.setBlockAndUpdate(pos, Blocks.KELP.defaultBlockState());
 		}
 		return items;
 	}
