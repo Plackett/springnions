@@ -26,18 +26,18 @@ public class CultivatorMenu extends AbstractContainerMenu {
 		super(MenuInit.CULTIVATOR.get(), windowId);
 		this.pos = pos;
 		if (player.level().getBlockEntity(pos) instanceof CultivatorEntity cultivator) {
-			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 28, 38));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 100, 9));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 118, 9));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 136, 9));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 100, 27));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 118, 27));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 136, 27));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 6, 100, 45));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 7, 118, 45));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 8, 136, 45));
+			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 39));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 98, 10));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 116, 10));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 134, 10));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 98, 28));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 116, 28));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 134, 28));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 6, 98, 46));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 7, 116, 46));
+			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 8, 134, 46));
 		}
-		layoutPlayerInventorySlots(player.getInventory(), 10, 70);
+		layoutPlayerInventorySlots(player.getInventory(), 8, 71);
 	}
 
 	private int addSlotRange(Container playerInventory, int index, int x, int y, int amount, int dx) {

@@ -104,20 +104,23 @@ public class CultivatorEntity extends BlockEntity {
 	}
 
 	public void tick() {
-		tickmeasure++;
-		if (!this.getLevel().isClientSide() && cooldown == true) {
+		if (!this.getLevel().isClientSide() && cooldown == true
+				&& getBlockState().getValue(Cultivator.HARVESTS_LEFT) > 0) {
 			cooldown = false;
 			if (Cultivator.isMature(this.getLevel().getBlockState(getBlockPos().above()), (ServerLevel) this.getLevel(),
 					this.getBlockPos().above()) == true) {
-				this.getLevel().setBlockAndUpdate(this.getBlockPos().above(),
-						this.getLevel().getBlockState(this.getBlockPos().above()).getBlock().defaultBlockState());
 				attemptInsert(Cultivator.Harvest(getLevel().getBlockState(getBlockPos().above()),
 						(ServerLevel) getLevel(), getBlockPos().above()));
 			}
+			getLevel().setBlockAndUpdate(getBlockPos(), getBlockState().setValue(Cultivator.HARVESTS_LEFT,
+					getBlockState().getValue(Cultivator.HARVESTS_LEFT) - 1));
 		}
-		if (tickmeasure == 40) {
-			tickmeasure = 0;
-			cooldown = true;
+		if (cooldown == false) {
+			tickmeasure++;
+			if (tickmeasure == 40) {
+				tickmeasure = 0;
+				cooldown = true;
+			}
 		}
 	}
 
@@ -130,7 +133,7 @@ public class CultivatorEntity extends BlockEntity {
 			// loop through all slots
 			for (int i = 0; i < SLOT_OUTPUT_COUNT; i++) {
 				// actually attempting to insert the item
-				item = outputItems.insertItem(i, item, true);
+				item = outputItems.insertItem(i, item, false);
 				System.out.print(item.getDisplayName() + "attempted");
 				// stop looping if nothing is left to insert
 				if (item.isEmpty()) {
@@ -141,12 +144,12 @@ public class CultivatorEntity extends BlockEntity {
 			// drop itemstack on the ground if it can't fit into the inventory of the
 			// machine
 			if (!item.isEmpty()) {
-				System.out.print(item.getDisplayName());
 				this.getLevel().addFreshEntity(new ItemEntity(this.getLevel(), (double) this.getBlockPos().getX(),
 						(double) this.getBlockPos().getY(), (double) this.getBlockPos().getZ(), item));
 			}
 		}
-		this.getLevel().setBlockAndUpdate(getBlockPos(), getBlockState());
+		this.getLevel().setBlockAndUpdate(getBlockPos(),
+				this.getLevel().getBlockState(getBlockPos()).getBlock().defaultBlockState());
 	}
 
 	public ItemStackHandler getInputItems() {

@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -47,6 +48,7 @@ import net.minecraftforge.network.NetworkHooks;
 public class Cultivator extends Block implements EntityBlock {
 
 	private static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+	public static final IntegerProperty HARVESTS_LEFT = IntegerProperty.create("harvests_left", 0, 64);
 
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
@@ -61,7 +63,8 @@ public class Cultivator extends Block implements EntityBlock {
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(HARVESTS_LEFT, 0);
 	}
 
 	@Override
@@ -77,7 +80,7 @@ public class Cultivator extends Block implements EntityBlock {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
+		builder.add(FACING, HARVESTS_LEFT);
 	}
 
 	@Override
