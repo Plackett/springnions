@@ -21,11 +21,13 @@ public class CultivatorMenu extends AbstractContainerMenu {
 	private int SLOT_INPUT = 0;
 	private int SLOT_OUTPUT = 0;
 	private int SLOT_COUNT = 10;
+	private CultivatorEntity cultivator;
 
 	public CultivatorMenu(int windowId, Player player, BlockPos pos) {
 		super(MenuInit.CULTIVATOR.get(), windowId);
 		this.pos = pos;
 		if (player.level().getBlockEntity(pos) instanceof CultivatorEntity cultivator) {
+			this.cultivator = cultivator;
 			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 39));
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 98, 10));
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 116, 10));
@@ -109,6 +111,10 @@ public class CultivatorMenu extends AbstractContainerMenu {
 	@Override
 	public boolean stillValid(Player player) {
 		return stillValid(ContainerLevelAccess.create(player.level(), pos), player, BlockInit.CULTIVATOR.get());
+	}
+
+	public CultivatorEntity getEntity() {
+		return this.cultivator;
 	}
 
 }
