@@ -6,7 +6,7 @@
 		"south": "springnions:block/organic_generator_side",
 		"west": "springnions:block/organic_generator_side",
 		"up": "springnions:block/organic_generator_top",
-		"down": "springnions:block/organic_generator_top"
-	},
-	"particle": "springnions:block/organic_generator_side"
+		"down": "springnions:block/organic_generator_top",
+		"particle": "springnions:block/organic_generator_side"
+	}
 }

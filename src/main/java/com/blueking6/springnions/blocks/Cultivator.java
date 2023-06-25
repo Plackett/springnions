@@ -35,6 +35,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -276,6 +277,20 @@ public class Cultivator extends Block implements EntityBlock {
 			lvl.setBlockAndUpdate(pos, Blocks.KELP.defaultBlockState());
 		}
 		return items;
+	}
+
+	@Override
+	public void onRemove(BlockState state, Level lvl, BlockPos pos, BlockState state2, boolean bool) {
+		if (!lvl.isClientSide()) {
+			if (lvl.getBlockEntity(pos) instanceof CultivatorEntity h) {
+				lvl.addFreshEntity(
+						new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), h.getInputItems().getStackInSlot(0)));
+				for (int i = 0; i < 9; i++) {
+					lvl.addFreshEntity(new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(),
+							h.getOutputItems().getStackInSlot(i)));
+				}
+			}
+		}
 	}
 
 }
