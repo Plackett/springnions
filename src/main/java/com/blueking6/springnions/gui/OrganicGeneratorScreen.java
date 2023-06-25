@@ -22,25 +22,27 @@
 
 package com.blueking6.springnions.gui;
 
-import com.blueking6.springnions.springnions;
-import net.minecraft.ChatFormatting;
-import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.joml.Math;
 
-public class CultivatorScreen extends AbstractContainerScreen<CultivatorMenu> {
+import com.blueking6.springnions.springnions;
 
-	private final ResourceLocation GUI = new ResourceLocation(springnions.MOD_ID, "textures/gui/cultivator.png");
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
-	public CultivatorScreen(CultivatorMenu menu, Inventory inv, Component comp) {
+public class OrganicGeneratorScreen extends AbstractContainerScreen<OrganicGeneratorMenu> {
+
+	private final ResourceLocation GUI = new ResourceLocation(springnions.MOD_ID, "textures/gui/organic_generator.png");
+
+	public OrganicGeneratorScreen(OrganicGeneratorMenu menu, Inventory inv, Component comp) {
 		super(menu, inv, comp);
 		this.inventoryLabelY = this.imageHeight - 107;
 	}
@@ -52,23 +54,20 @@ public class CultivatorScreen extends AbstractContainerScreen<CultivatorMenu> {
 		graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth + 6, this.imageHeight);
 		int k = this.menu.getData(0);
 		k = Math.round(k * (16 / 200F));
-		graphics.blit(GUI, getGuiLeft() + 26, getGuiTop() + 22, 183, 57, 16, 16 - k);
-		int energyBuffer = this.menu.getData(1);
-		int energyBufferLevel = Math.round(energyBuffer * (48 / 256F));
-		graphics.blit(GUI, getGuiLeft() + 53, getGuiTop() + 16, 207, 16, 43, 48 - energyBufferLevel);
-		this.menu.getEntity().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
+		graphics.blit(GUI, getGuiLeft() + 80, getGuiTop() + 22, 183, 57, 16, 16 - k);
+		this.menu.getEntityy().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
 			int energyAmount = handler.getEnergyStored();
-			int energyLevel = Math.round(energyAmount * (40 / 1024F));
-			graphics.blit(GUI, getGuiLeft() + 5, getGuiTop() + 16, 182, 16, 18, 40 - energyLevel);
+			int energyLevel = Math.round(energyAmount * (40 / 8192F));
+			graphics.blit(GUI, getGuiLeft() + 57, getGuiTop() + 17, 182, 16, 18, 40 - energyLevel);
 		});
 	}
 
 	@Override
 	protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-		this.menu.getEntity().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
+		this.menu.getEntityy().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
 			int energyAmount = handler.getEnergyStored();
 
-			if (isHovering(8, 15, 18, 42, mouseX, mouseY)) {
+			if (isHovering(57, 16, 18, 42, mouseX, mouseY)) {
 				List<FormattedCharSequence> tooltipList = new ArrayList<>();
 				tooltipList
 						.add(Component

@@ -1,8 +1,9 @@
 package com.blueking6.springnions.gui;
 
-import com.blueking6.springnions.entities.CultivatorEntity;
+import com.blueking6.springnions.entities.OrganicGeneratorEntity;
 import com.blueking6.springnions.init.BlockInit;
 import com.blueking6.springnions.init.MenuInit;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,42 +18,32 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class CultivatorMenu extends AbstractContainerMenu {
+public class OrganicGeneratorMenu extends AbstractContainerMenu {
 
-	private final BlockPos pos;
-	private int SLOT_INPUT = 0;
-	private int SLOT_OUTPUT = 0;
-	private int SLOT_COUNT = 10;
-	private CultivatorEntity cultivator;
+	private OrganicGeneratorEntity entity;
 	private ContainerData data;
+	private BlockPos pos;
+	public static int SLOT_INPUT = 0;
+	public static int SLOT_COUNT = 1;
 
-	public CultivatorMenu(int windowId, Player player, BlockPos pos) {
-		super(MenuInit.CULTIVATOR.get(), windowId);
+	public OrganicGeneratorMenu(int windowId, Player player, BlockPos pos) {
+		super(MenuInit.ORGANIC_GENERATOR.get(), windowId);
 		this.pos = pos;
-		if (player.level().getBlockEntity(pos) instanceof CultivatorEntity cultivator) {
-			this.cultivator = cultivator;
-			this.data = cultivator.dataAccess;
-			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 39));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 98, 10));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 116, 10));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 134, 10));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 3, 98, 28));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 4, 116, 28));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 5, 134, 28));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 6, 98, 46));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 7, 116, 46));
-			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 8, 134, 46));
+		if (player.level().getBlockEntity(pos) instanceof OrganicGeneratorEntity entity) {
+			this.entity = entity;
+			this.data = entity.dataAccess;
+			addSlot(new SlotItemHandler(entity.getInputItems(), SLOT_INPUT, 80, 39));
 			addDataSlot(new DataSlot() {
 
 				@Override
 				public int get() {
-					return cultivator.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored)
+					return entity.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored)
 							.orElse(0);
 				}
 
 				@Override
 				public void set(int value) {
-					cultivator.getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
+					entity.getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
 						if (handler.getEnergyStored() > 0) {
 							handler.extractEnergy(handler.getEnergyStored(), false);
 						}
@@ -61,6 +52,7 @@ public class CultivatorMenu extends AbstractContainerMenu {
 						}
 					});
 				}
+
 			});
 		}
 		layoutPlayerInventorySlots(player.getInventory(), 8, 71);
@@ -135,18 +127,15 @@ public class CultivatorMenu extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return stillValid(ContainerLevelAccess.create(player.level(), pos), player, BlockInit.CULTIVATOR.get());
+		return stillValid(ContainerLevelAccess.create(player.level(), pos), player, BlockInit.ORGANIC_GENERATOR.get());
 	}
 
-	public CultivatorEntity getEntity() {
-		return this.cultivator;
+	public int getData(int i) {
+		return this.data.get(i);
 	}
 
-	public int getData(int index) {
-		if (index == 0 && this.data.get(index) > 200) {
-			return 200;
-		}
-		return this.data.get(index);
+	public OrganicGeneratorEntity getEntityy() {
+		return this.entity;
 	}
 
 }

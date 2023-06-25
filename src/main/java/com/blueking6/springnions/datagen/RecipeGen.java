@@ -1,3 +1,25 @@
+//MIT License
+//
+//Copyright (c) 2023 Blueking6
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in all
+//copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//SOFTWARE.
+
 package com.blueking6.springnions.datagen;
 
 import java.util.function.Consumer;
@@ -134,6 +156,18 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
 				.unlockedBy("obtain_golden_onion",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.GOLDEN_ONION.get()))
 				.save(consumer, new ResourceLocation("springnions", "tofu_press3"));
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ItemInit.ORGANIC_GENERATOR.get(), 1).pattern("/o/")
+				.pattern("oHo").pattern("/f/").define('/', ItemInit.ONION.get()).define('o', Items.IRON_INGOT)
+				.define('H', Items.REDSTONE).define('f', Items.BLAST_FURNACE)
+				.unlockedBy("obtain_golden_onion",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.GOLDEN_ONION.get()))
+				.save(consumer, new ResourceLocation("springnions", "organic_generator"));
+		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ItemInit.CULTIVATOR.get(), 1).pattern("/H/").pattern("ofo")
+				.pattern("/o/").define('/', ItemInit.GOLDEN_ONION.get()).define('o', Items.IRON_INGOT)
+				.define('H', Items.GOLDEN_HOE).define('f', ItemInit.ORGANIC_GENERATOR.get())
+				.unlockedBy("obtain_golden_onion",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.GOLDEN_ONION.get()))
+				.save(consumer, new ResourceLocation("springnions", "cultivator"));
 	}
 
 }

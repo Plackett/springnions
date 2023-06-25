@@ -16,6 +16,7 @@
 	"item.springnions.hydrochip3": "Hydroelectric Chip Lv3",
 	"item.springnions.soy_pulp": "Soy Pulp",
 	"item.springnions.cultivator": "Cultivator",
+	"item.springnions.organic_generator": "Organic Generator",
 	
 	"block.springnions.onion_shelf": "Onion Shelf",
 	"block.springnions.tofu_press": "Tofu Press",
@@ -23,6 +24,7 @@
 	"block.springnions.tofu_press3": "Tofu Press Lv3",
 	"block.springnions.tofu_pressc": "Tofu Press Creative",
 	"block.springnions.cultivator": "Cultivator",
+	"block.springnions.organic_generator": "Organic Generator",
 	
 	"itemGroup.springnions": "Springnions",
 	

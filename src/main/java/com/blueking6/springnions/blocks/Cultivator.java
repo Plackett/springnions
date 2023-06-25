@@ -1,3 +1,25 @@
+//MIT License
+//
+//Copyright (c) 2023 Blueking6
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in all
+//copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//SOFTWARE.
+
 package com.blueking6.springnions.blocks;
 
 import java.util.List;
@@ -23,14 +45,21 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CaveVinesPlantBlock;
+import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.MelonBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.PumpkinBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.block.TorchflowerCropBlock;
+import net.minecraft.world.level.block.TwistingVinesPlantBlock;
+import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.level.block.WeepingVinesPlantBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -38,7 +67,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -48,7 +76,6 @@ import net.minecraftforge.network.NetworkHooks;
 public class Cultivator extends Block implements EntityBlock {
 
 	private static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final IntegerProperty HARVESTS_LEFT = IntegerProperty.create("harvests_left", 0, 64);
 
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
@@ -63,8 +90,7 @@ public class Cultivator extends Block implements EntityBlock {
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite())
-				.setValue(HARVESTS_LEFT, 0);
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
@@ -80,7 +106,7 @@ public class Cultivator extends Block implements EntityBlock {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING, HARVESTS_LEFT);
+		builder.add(FACING);
 	}
 
 	@Override
@@ -123,10 +149,30 @@ public class Cultivator extends Block implements EntityBlock {
 			return ((CropBlock) block.getBlock()).isMaxAge(state);
 			// for berry bushes
 		} else if (state.hasProperty(SweetBerryBushBlock.AGE)) {
-			return state.getValue(SweetBerryBushBlock.AGE) == 3;
+			return state.getValue(SweetBerryBushBlock.AGE) >= 3;
+			// for pitcher plant and torchflower
+		} else if (block.getBlock() instanceof PitcherCropBlock || block.getBlock() instanceof TorchflowerCropBlock) {
+			if (block.getBlock() instanceof PitcherCropBlock) {
+				return state.getValue(PitcherCropBlock.AGE) >= 4;
+			} else {
+				return state.getValue(TorchflowerCropBlock.AGE) >= 2;
+			}
 			// for nether wart
 		} else if (block.getBlock() instanceof NetherWartBlock) {
-			return state.getValue(NetherWartBlock.AGE) == 3;
+			return state.getValue(NetherWartBlock.AGE) >= 3;
+			// for all types of vines
+		} else if (block.getBlock() instanceof VineBlock || block.getBlock() instanceof CaveVinesPlantBlock
+				|| block.getBlock() instanceof WeepingVinesPlantBlock
+				|| block.getBlock() instanceof TwistingVinesPlantBlock) {
+			if (block.getBlock() instanceof TwistingVinesPlantBlock) {
+				return level.getBlockState(pos.above()).getBlock() instanceof TwistingVinesPlantBlock;
+			} else {
+				return true;
+			}
+
+			// for cocoa beans
+		} else if (state.hasProperty(CocoaBlock.AGE)) {
+			return state.getValue(CocoaBlock.AGE) >= 2;
 			// for cactus, sugarcane, and bamboo
 		} else if (block.getBlock() == level.getBlockState(pos.above()).getBlock()) {
 			return (block.getBlock().equals(Blocks.SUGAR_CANE) || block.getBlock().equals(Blocks.CACTUS)
@@ -170,16 +216,51 @@ public class Cultivator extends Block implements EntityBlock {
 		} else if (state.hasProperty(SweetBerryBushBlock.AGE)) {
 			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
 			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			// for pitcher plant and torchflower
+		} else if (block.getBlock() instanceof PitcherCropBlock || block.getBlock() instanceof TorchflowerCropBlock) {
+			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
 			// for nether wart
 		} else if (block.getBlock() instanceof NetherWartBlock) {
 			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
 			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
-			// for cactus, sugarcane, and bamboo
+			// for all types of vines
+		} else if (block.getBlock() instanceof VineBlock || block.getBlock() instanceof CaveVinesPlantBlock
+				|| block.getBlock() instanceof WeepingVinesPlantBlock
+				|| block.getBlock() instanceof TwistingVinesPlantBlock) {
+			if (block.getBlock() instanceof TwistingVinesPlantBlock) {
+				items.addAll(Block.getDrops(lvl.getBlockState(pos.above()), lvl, pos.above(),
+						lvl.getBlockEntity(pos.above())));
+				for (int i = 2; i < 26; i++) {
+					if (lvl.getBlockState(pos.above(i)).getBlock() == Blocks.TWISTING_VINES_PLANT
+							|| lvl.getBlockState(pos.above(i)).getBlock() == Blocks.TWISTING_VINES) {
+						items.addAll(Block.getDrops(state, lvl, pos.above(i), lvl.getBlockEntity(pos)));
+						lvl.setBlockAndUpdate(pos.above(i), Blocks.AIR.defaultBlockState());
+					}
+				}
+				lvl.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
+			} else {
+				items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+				lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+			}
+
+			// for cocoa beans
+		} else if (state.hasProperty(CocoaBlock.AGE)) {
+			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
+			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			// for cactus, sugarcane, and bamboo, if bamboo check up to 16 blocks above and
+			// replace air
 		} else if (block.getBlock() == lvl.getBlockState(pos.above()).getBlock()) {
 			items.addAll(Block.getDrops(state, lvl, pos.above(2), lvl.getBlockEntity(pos)));
 			items.addAll(Block.getDrops(state, lvl, pos.above(1), lvl.getBlockEntity(pos)));
 			lvl.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
 			if (block.getBlock() == Blocks.BAMBOO) {
+				for (int i = 2; i < 16; i++) {
+					if (lvl.getBlockState(pos.above(i)).getBlock() == Blocks.BAMBOO) {
+						items.addAll(Block.getDrops(state, lvl, pos.above(i), lvl.getBlockEntity(pos)));
+						lvl.setBlockAndUpdate(pos.above(i), Blocks.AIR.defaultBlockState());
+					}
+				}
 				lvl.setBlockAndUpdate(pos, Blocks.BAMBOO_SAPLING.defaultBlockState());
 			} else {
 				lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());

@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"north": "springnions:block/organic_generator_front",
+		"east": "springnions:block/organic_generator_side",
+		"south": "springnions:block/organic_generator_side",
+		"west": "springnions:block/organic_generator_side",
+		"up": "springnions:block/organic_generator_top",
+		"down": "springnions:block/organic_generator_top"
+	},
+	"particle": "springnions:block/organic_generator_side"
+}
