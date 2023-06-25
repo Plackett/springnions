@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "/": {
+      "item": "springnions:onion"
+    },
+    "H": {
+      "item": "minecraft:redstone"
+    },
+    "f": {
+      "item": "minecraft:blast_furnace"
+    },
+    "o": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "/o/",
+    "oHo",
+    "/f/"
+  ],
+  "result": {
+    "item": "springnions:organic_generator"
+  },
+  "show_notification": true
+}

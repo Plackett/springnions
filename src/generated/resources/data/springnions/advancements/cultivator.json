@@ -1,0 +1,39 @@
+{
+  "parent": "springnions:golden_onion_advancement",
+  "criteria": {
+    "has_cult": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "springnions:cultivator"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Achieve ultimate automation for your plants... At a price."
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "springnions:cultivator"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "This Is The World Now"
+    }
+  },
+  "requirements": [
+    [
+      "has_cult"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

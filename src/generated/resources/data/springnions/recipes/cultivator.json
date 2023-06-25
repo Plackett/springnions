@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "/": {
+      "item": "springnions:golden_onion"
+    },
+    "H": {
+      "item": "minecraft:golden_hoe"
+    },
+    "f": {
+      "item": "springnions:organic_generator"
+    },
+    "o": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "/H/",
+    "ofo",
+    "/o/"
+  ],
+  "result": {
+    "item": "springnions:cultivator"
+  },
+  "show_notification": true
+}

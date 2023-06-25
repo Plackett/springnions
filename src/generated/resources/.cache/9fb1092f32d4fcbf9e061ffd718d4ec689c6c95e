@@ -1,4 +1,4 @@
-// 1.20	2023-06-12T17:23:21.866364	Recipes
+// 1.20.1	2023-06-25T22:54:15.637739	Recipes
 1580b66c5a1da2965aebcbfb406fcb2e8e5624bc data/springnions/advancements/recipes/food/golden_onion.json
 0a4f333f0e1b4d2a8d88466354d058a0ac14403b data/springnions/advancements/recipes/food/grilled_tofu.json
 7c5b5c9fac93da2d3a22c08aa3f4cdc6593d117a data/springnions/advancements/recipes/food/grilled_tofu_smelt.json
@@ -10,9 +10,12 @@ cda5f1db6a260f7785efa0eecb4ade6a917efedb data/springnions/advancements/recipes/f
 f6eab601f06462ffdfb84aafc6f284a6c2450ebe data/springnions/advancements/recipes/misc/hydrochip2.json
 768b0f51c823a165875914a2a9dc5eb58fb84402 data/springnions/advancements/recipes/misc/hydrochip3.json
 48730e332eb39e1146a2e61470483a3f7988605b data/springnions/advancements/recipes/misc/soymilk_bucket.json
+b5ba4982bf316c2e40e9af6262fa825fdaa768c3 data/springnions/advancements/recipes/redstone/cultivator.json
+90633775f2044b778d4cdbf2258549de77346267 data/springnions/advancements/recipes/redstone/organic_generator.json
 262a27190f18eb23a67302f21f177cb7cd455e7f data/springnions/advancements/recipes/redstone/tofu_press.json
 148f6f7c70ab1546af2e49e2b4de0b26d48edaaa data/springnions/advancements/recipes/redstone/tofu_press2.json
 9a64f11ca1558e6ac994d2d956f603fa9af99632 data/springnions/advancements/recipes/redstone/tofu_press3.json
+31b5f5f55b2edce3378b2f56706531e22903d263 data/springnions/recipes/cultivator.json
 e2b12ef0dfcb7246a53c5237d0832383c53eb9c4 data/springnions/recipes/golden_onion.json
 0f283828bc288390adff21424a4d1e501f2d82d3 data/springnions/recipes/grilled_tofu.json
 5eea45e67d1a1efd021507050bb452ee73af8fee data/springnions/recipes/grilled_tofu_smelt.json
@@ -23,6 +26,7 @@ a180da411cfffad4094b44182be116fa8b70cac0 data/springnions/recipes/hydrochip3.jso
 fd11b05ad38f02d55db83bb6897c2fdc58431f97 data/springnions/recipes/onion_crate.json
 eed83ddc6466dec7ae576d01917014c683e549b3 data/springnions/recipes/onion_shelf.json
 648929b8849a15c367cc829fa12a57b191d30a72 data/springnions/recipes/onion_stew.json
+107fa974290b0cdc8334498c7c59351d797f23a9 data/springnions/recipes/organic_generator.json
 9f197c0e74461f56e3cb51bfb95e6cf156486554 data/springnions/recipes/soymilk_bucket.json
 1e7c88d07b634f7a4e256cd9f282bbb3fff5ffcc data/springnions/recipes/tofu_press.json
 3f73b7bd4352c68c43142268c3a05b863eee5963 data/springnions/recipes/tofu_press2.json
