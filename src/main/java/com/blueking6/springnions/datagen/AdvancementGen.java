@@ -94,7 +94,9 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.GOLDEN_ONION.get()))
 				.parent(onion)
 				.rewards(AdvancementRewards.Builder.recipe(new ResourceLocation("springnions:tofu_press2"))
-						.addRecipe(new ResourceLocation("springnions:tofu_press3")))
+						.addRecipe(new ResourceLocation("springnions:tofu_press3"))
+						.addRecipe(new ResourceLocation("springnions:cultivator"))
+						.addRecipe(new ResourceLocation("springnions:organic_generator")))
 				.save(saver, new ResourceLocation(springnions.MOD_ID, "golden_onion_advancement"), existingFileHelper);
 
 		Advancement.Builder.advancement()
