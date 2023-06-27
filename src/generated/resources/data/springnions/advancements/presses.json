@@ -1,5 +1,5 @@
 {
-  "parent": "springnions:bean_planter",
+  "parent": "springnions:gen",
   "criteria": {
     "has_tofu": {
       "conditions": {

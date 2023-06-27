@@ -165,8 +165,8 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
 		ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ItemInit.CULTIVATOR.get(), 1).pattern("/H/").pattern("ofo")
 				.pattern("/o/").define('/', ItemInit.GOLDEN_ONION.get()).define('o', Items.IRON_INGOT)
 				.define('H', Items.GOLDEN_HOE).define('f', ItemInit.ORGANIC_GENERATOR.get())
-				.unlockedBy("obtain_golden_onion",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.GOLDEN_ONION.get()))
+				.unlockedBy("obtain_gen",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.ORGANIC_GENERATOR.get()))
 				.save(consumer, new ResourceLocation("springnions", "cultivator"));
 	}
 

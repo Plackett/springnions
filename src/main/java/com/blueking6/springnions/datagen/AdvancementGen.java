@@ -54,7 +54,7 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 				.addCriterion("has_onion", InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.ONION.get()))
 				.save(saver, new ResourceLocation(springnions.MOD_ID, "springnions"), existingFileHelper);
 
-		Advancement soy = Advancement.Builder.advancement()
+		Advancement.Builder.advancement()
 				.display(ItemInit.SOYBEANS.get(), Component.translatable("Beans, Beans, the Musical Fruit"),
 						Component.translatable("Plant your first soybean plant."),
 						new ResourceLocation("springnions:textures/block/onion_shelf.png"), FrameType.TASK, true, true,
@@ -112,6 +112,17 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 				.parent(onion)
 				.save(saver, new ResourceLocation(springnions.MOD_ID, "onion_shelf_advancement"), existingFileHelper);
 
+		Advancement industry = Advancement.Builder.advancement()
+				.display(ItemInit.ORGANIC_GENERATOR.get(), Component.translatable("Enter the Industrial Age"),
+						Component.translatable(
+								"Inevitably fall to the temptations of machinery and craft your first generator."),
+						new ResourceLocation("springnions:textures/block/onion_shelf.png"), FrameType.GOAL, true, true,
+						true)
+				.addCriterion("has_gen",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.ORGANIC_GENERATOR.get()))
+				.rewards(AdvancementRewards.Builder.recipe(new ResourceLocation("springnions:cultivator"))).parent(gold)
+				.save(saver, new ResourceLocation(springnions.MOD_ID, "gen"), existingFileHelper);
+
 		Advancement press = Advancement.Builder.advancement()
 				.display(ItemInit.TOFUPRESS.get(), Component.translatable("Fresh Off The Presses"),
 						Component.translatable("Make your first batch of tofu."),
@@ -120,7 +131,7 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 				.addCriterion("has_tofu", InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.TOFU.get()))
 				.rewards(AdvancementRewards.Builder.recipe(new ResourceLocation("springnions:hydrochip2"))
 						.addRecipe(new ResourceLocation("springnions:hydrochip3")))
-				.parent(soy).save(saver, new ResourceLocation(springnions.MOD_ID, "presses"), existingFileHelper);
+				.parent(industry).save(saver, new ResourceLocation(springnions.MOD_ID, "presses"), existingFileHelper);
 
 		Advancement.Builder.advancement()
 				.display(ItemInit.TOFUPRESS3.get(), Component.translatable("Maximum Overdrive"),
@@ -137,7 +148,8 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 						new ResourceLocation("springnions:textures/block/onion_shelf.png"), FrameType.CHALLENGE, true,
 						true, true)
 				.addCriterion("has_cult", InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.CULTIVATOR.get()))
-				.parent(gold).save(saver, new ResourceLocation(springnions.MOD_ID, "cultivator"), existingFileHelper);
+				.parent(industry)
+				.save(saver, new ResourceLocation(springnions.MOD_ID, "cultivator"), existingFileHelper);
 
 	}
 

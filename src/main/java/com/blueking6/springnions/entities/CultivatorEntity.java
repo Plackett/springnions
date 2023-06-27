@@ -65,20 +65,13 @@ public class CultivatorEntity extends BlockEntity {
 	public int hleft = 0;
 	public int energybuffer = 0;
 
+	// issue 0002: inserting items would duplicate the stack, fixed by stopping
+	// returning of the stack in insertItem
 	private final ItemStackHandler inputItems = new ItemStackHandler(1) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			setChanged();
 		}
-
-		@Override
-		public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-			if (!stack.getItem().isFireResistant()) {
-				return ItemStack.EMPTY;
-			}
-			return stack;
-		}
-
 	};
 	private final ItemStackHandler outputItems = new ItemStackHandler(9) {
 		@Override

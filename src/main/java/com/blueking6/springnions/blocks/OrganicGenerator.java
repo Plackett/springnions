@@ -132,6 +132,8 @@ public class OrganicGenerator extends Block implements EntityBlock {
 		};
 	}
 
+	// issue 0001: Blockentity not being deleted on block destruction, fix was to add back the super constructor. 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, Level lvl, BlockPos pos, BlockState state2, boolean bool) {
 		if (!lvl.isClientSide()) {
@@ -140,6 +142,7 @@ public class OrganicGenerator extends Block implements EntityBlock {
 						new ItemEntity(lvl, pos.getX(), pos.getY(), pos.getZ(), h.getInputItems().getStackInSlot(0)));
 			}
 		}
+		super.onRemove(state, lvl, pos, state2, bool);
 	}
 
 }

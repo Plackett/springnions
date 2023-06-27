@@ -7,12 +7,12 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "obtain_golden_onion": {
+    "obtain_gen": {
       "conditions": {
         "items": [
           {
             "items": [
-              "springnions:golden_onion"
+              "springnions:organic_generator"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "obtain_golden_onion",
+      "obtain_gen",
       "has_the_recipe"
     ]
   ],

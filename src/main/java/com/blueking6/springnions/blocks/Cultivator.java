@@ -41,11 +41,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CaveVinesBlock;
 import net.minecraft.world.level.block.CaveVinesPlantBlock;
 import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.CropBlock;
@@ -58,8 +60,10 @@ import net.minecraft.world.level.block.PumpkinBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.TorchflowerCropBlock;
+import net.minecraft.world.level.block.TwistingVinesBlock;
 import net.minecraft.world.level.block.TwistingVinesPlantBlock;
 import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.level.block.WeepingVinesBlock;
 import net.minecraft.world.level.block.WeepingVinesPlantBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -227,9 +231,10 @@ public class Cultivator extends Block implements EntityBlock {
 			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
 			// for all types of vines
 		} else if (block.getBlock() instanceof VineBlock || block.getBlock() instanceof CaveVinesPlantBlock
-				|| block.getBlock() instanceof WeepingVinesPlantBlock
-				|| block.getBlock() instanceof TwistingVinesPlantBlock) {
-			if (block.getBlock() instanceof TwistingVinesPlantBlock) {
+				|| block.getBlock() instanceof CaveVinesBlock || block.getBlock() instanceof WeepingVinesPlantBlock
+				|| block.getBlock() instanceof WeepingVinesBlock || block.getBlock() instanceof TwistingVinesPlantBlock
+				|| block.getBlock() instanceof TwistingVinesBlock) {
+			if (block.getBlock() instanceof TwistingVinesPlantBlock || block.getBlock() instanceof TwistingVinesBlock) {
 				items.addAll(Block.getDrops(lvl.getBlockState(pos.above()), lvl, pos.above(),
 						lvl.getBlockEntity(pos.above())));
 				for (int i = 2; i < 26; i++) {
@@ -240,15 +245,21 @@ public class Cultivator extends Block implements EntityBlock {
 					}
 				}
 				lvl.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
+			} else if (block.getBlock() instanceof VineBlock) {
+				items.add(new ItemStack(Items.VINE, 1));
+				lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			} else {
 				items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
 				lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			}
 
+			// issue 0003: when harvested the cocoa bean would face the wrong way fixed by
+			// preserving facing value
 			// for cocoa beans
 		} else if (state.hasProperty(CocoaBlock.AGE)) {
 			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
-			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState().setValue(CocoaBlock.FACING,
+					state.getValue(CocoaBlock.FACING)));
 			// for cactus, sugarcane, and bamboo, if bamboo check up to 16 blocks above and
 			// replace air
 		} else if (block.getBlock() == lvl.getBlockState(pos.above()).getBlock()) {
@@ -279,6 +290,9 @@ public class Cultivator extends Block implements EntityBlock {
 		return items;
 	}
 
+	// issue 0001: Blockentity not being deleted on block destruction, fix was to
+	// add back the super constructor.
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, Level lvl, BlockPos pos, BlockState state2, boolean bool) {
 		if (!lvl.isClientSide()) {
@@ -291,6 +305,7 @@ public class Cultivator extends Block implements EntityBlock {
 				}
 			}
 		}
+		super.onRemove(state, lvl, pos, state2, bool);
 	}
 
 }

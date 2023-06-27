@@ -1,12 +1,12 @@
 {
-  "parent": "springnions:gen",
+  "parent": "springnions:golden_onion_advancement",
   "criteria": {
-    "has_cult": {
+    "has_gen": {
       "conditions": {
         "items": [
           {
             "items": [
-              "springnions:cultivator"
+              "springnions:organic_generator"
             ]
           }
         ]
@@ -18,22 +18,27 @@
     "announce_to_chat": true,
     "background": "springnions:textures/block/onion_shelf.png",
     "description": {
-      "translate": "Achieve ultimate automation for your plants... At a price."
+      "translate": "Inevitably fall to the temptations of machinery and craft your first generator."
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": true,
     "icon": {
-      "item": "springnions:cultivator"
+      "item": "springnions:organic_generator"
     },
     "show_toast": true,
     "title": {
-      "translate": "This Is The World Now"
+      "translate": "Enter the Industrial Age"
     }
   },
   "requirements": [
     [
-      "has_cult"
+      "has_gen"
     ]
   ],
+  "rewards": {
+    "recipes": [
+      "springnions:cultivator"
+    ]
+  },
   "sends_telemetry_event": true
 }

@@ -50,6 +50,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -66,6 +67,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -129,6 +131,7 @@ public class springnions {
 		MenuInit.register(bus);
 
 		bus.addListener(this::clientSetup);
+		bus.addListener(this::commonSetup);
 		bus.addListener(this::loadComplete);
 		bus.addListener(this::buildContents);
 		bus.addListener(this::gatherData);
@@ -151,6 +154,12 @@ public class springnions {
 		event.enqueueWork(() -> {
 			MenuScreens.register(MenuInit.CULTIVATOR.get(), CultivatorScreen::new);
 			MenuScreens.register(MenuInit.ORGANIC_GENERATOR.get(), OrganicGeneratorScreen::new);
+		});
+	}
+
+	private void commonSetup(final FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> {
+			ComposterBlock.COMPOSTABLES.put(ItemInit.SOY_PULP.get(), 0.5F);
 		});
 	}
 

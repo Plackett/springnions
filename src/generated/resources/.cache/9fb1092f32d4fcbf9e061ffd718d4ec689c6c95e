@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-25T22:54:15.637739	Recipes
+// 1.20.1	2023-06-28T00:07:32.0764193	Recipes
 1580b66c5a1da2965aebcbfb406fcb2e8e5624bc data/springnions/advancements/recipes/food/golden_onion.json
 0a4f333f0e1b4d2a8d88466354d058a0ac14403b data/springnions/advancements/recipes/food/grilled_tofu.json
 7c5b5c9fac93da2d3a22c08aa3f4cdc6593d117a data/springnions/advancements/recipes/food/grilled_tofu_smelt.json
@@ -10,7 +10,7 @@ cda5f1db6a260f7785efa0eecb4ade6a917efedb data/springnions/advancements/recipes/f
 f6eab601f06462ffdfb84aafc6f284a6c2450ebe data/springnions/advancements/recipes/misc/hydrochip2.json
 768b0f51c823a165875914a2a9dc5eb58fb84402 data/springnions/advancements/recipes/misc/hydrochip3.json
 48730e332eb39e1146a2e61470483a3f7988605b data/springnions/advancements/recipes/misc/soymilk_bucket.json
-b5ba4982bf316c2e40e9af6262fa825fdaa768c3 data/springnions/advancements/recipes/redstone/cultivator.json
+875ba24729eee5bb7dd3a4cdee4e32d2ed3df5d6 data/springnions/advancements/recipes/redstone/cultivator.json
 90633775f2044b778d4cdbf2258549de77346267 data/springnions/advancements/recipes/redstone/organic_generator.json
 262a27190f18eb23a67302f21f177cb7cd455e7f data/springnions/advancements/recipes/redstone/tofu_press.json
 148f6f7c70ab1546af2e49e2b4de0b26d48edaaa data/springnions/advancements/recipes/redstone/tofu_press2.json
