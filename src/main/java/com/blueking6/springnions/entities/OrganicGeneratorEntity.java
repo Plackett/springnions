@@ -24,6 +24,7 @@ package com.blueking6.springnions.entities;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.blueking6.config.SpringnionsCommonConfigs;
 import com.blueking6.springnions.blocks.OrganicGenerator;
 import com.blueking6.springnions.init.EntityInit;
 import com.blueking6.tools.ModifiedEnergyStorage;
@@ -60,7 +61,8 @@ public class OrganicGeneratorEntity extends BlockEntity {
 
 	};
 	private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> inputItems);
-	private final ModifiedEnergyStorage energy = new ModifiedEnergyStorage(8192);
+	private final ModifiedEnergyStorage energy = new ModifiedEnergyStorage(
+			SpringnionsCommonConfigs.ORGANIC_GENERATOR_CAPACITY.get());
 	private final LazyOptional<IEnergyStorage> energyHandler = LazyOptional.of(() -> energy);
 	private int litTime;
 
@@ -139,10 +141,11 @@ public class OrganicGeneratorEntity extends BlockEntity {
 				this.getLevel().setBlockAndUpdate(getBlockPos(), getBlockState().setValue(OrganicGenerator.LIT, true));
 			}
 			--this.litTime;
-			this.energy.receiveEnergy(4, false);
+			this.energy.receiveEnergy(SpringnionsCommonConfigs.ORGANIC_GENERATOR_RATE.get(), false);
 		} else {
 			if (ForgeHooks.getBurnTime(new ItemStack(this.inputItems.getStackInSlot(0).getItem(), 1), null) > 0
-					&& this.energy.getEnergyStored() < this.energy.getMaxEnergyStored()) {
+					&& this.energy.getEnergyStored() < this.energy.getMaxEnergyStored()
+					&& SpringnionsCommonConfigs.ORGANIC_GENERATOR_RATE.get() > 0) {
 				litTime += ForgeHooks.getBurnTime(this.inputItems.getStackInSlot(0), null);
 				ItemStack returnstack = this.inputItems.getStackInSlot(0);
 				if (returnstack.getItem() == Items.LAVA_BUCKET) {

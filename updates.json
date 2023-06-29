@@ -1,0 +1,24 @@
+{
+  "homepage": "https://www.curseforge.com/minecraft/mc-mods/springnions/files",
+  "1.19": {
+    "1.0.0": "This release includes Onions, which are plantable crops that can be found in all villages, Onion Crates, Onion Shelves to store Onion Crates, Golden Onions, and Onion Stew.",
+    "1.0.1": "Added Tofu Presses, Tofu, more achievements, soybeans, soymilk, audio for the tofu presses, etc.",
+  },
+  "1.19.4": {
+    "1.0.2": "Updated to 1.19.4",
+    "1.0.3": "Fixed tofu presses not dropping when broken, recipes given upon achievements and onion shelves acting as x-rays.",
+  },
+  "1.20": {
+    "1.0.4": "Patched the bugs in the code so that it works in 1.20, next update will be more stable and NOT have the springnions base achievement granted on the first tick and ill try to get AdvancementGenerators working.",
+    "1.0.5": "onion soup gives you a bowl back when you drink/eat it,recipes and advancements are all generated now instead of being poorly written by me,updated to Forge 46.0.13 on version 1.20!",
+},
+  "1.20.1": {
+    "1.0.6": "Updated to 1.20.1, Added Soy Pulp, a byproduct of manufacturing tofu that currently has no uses, please suggest any in the comments!,/nTofu Presses now take 4 soybeans at a time and output 3 tofu and 1 soy pulp every time.",
+    "2.0.0": "First Major Update!!!/n Added Cultivator, a new machine that can harvest most crops, takes 256 FE per harvest and has a built in generator that produces 1 FE/t./n Added Organic Generator, a standard generator block that takes in any flammable item, generates 4 FE/t and can transfer power to a Cultivator if placed right next to it./n Added new Advancements and recipes.",
+     "2.0.1": "Patched item duplication glitches regarding the new machines, added new advancements, soy pulp is now compostable and crafting with onions will give you eye pain and blur your vision temporarily now,/n with golden onions in recipes making you have pain for extended periods of time.",
+},
+  "promos": {
+    "1.20.1-latest": "2.0.1",
+    "1.20.1-recommended": "2.0.1",
+  }
+}

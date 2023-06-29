@@ -35,6 +35,7 @@ import com.blueking6.springnions.gui.CultivatorScreen;
 import com.blueking6.springnions.gui.OrganicGeneratorScreen;
 import com.blueking6.springnions.init.BlockInit;
 import com.blueking6.springnions.init.CreativeTabInit;
+import com.blueking6.springnions.init.EffectInit;
 import com.blueking6.springnions.init.FluidInit;
 import com.blueking6.springnions.init.ItemInit;
 import com.blueking6.springnions.init.MenuInit;
@@ -48,6 +49,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
@@ -58,6 +60,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -129,6 +132,7 @@ public class springnions {
 		SoundInit.register(bus);
 		CreativeTabInit.register(bus);
 		MenuInit.register(bus);
+		EffectInit.register(bus);
 
 		bus.addListener(this::clientSetup);
 		bus.addListener(this::commonSetup);
@@ -155,6 +159,15 @@ public class springnions {
 			MenuScreens.register(MenuInit.CULTIVATOR.get(), CultivatorScreen::new);
 			MenuScreens.register(MenuInit.ORGANIC_GENERATOR.get(), OrganicGeneratorScreen::new);
 		});
+	}
+
+	@SubscribeEvent
+	public void itemCrafted(final ItemCraftedEvent event) {
+		// give eye pain for 15 minutes at max strength for crafting cultivator
+		if (event.getCrafting().getItem() == ItemInit.CULTIVATOR.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 18000, 255));
+		}
+		;
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {

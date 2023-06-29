@@ -62,7 +62,6 @@ public class CultivatorEntity extends BlockEntity {
 	public boolean cooldown = true;
 	private int tickmeasure;
 	public int litTime = 0;
-	public int hleft = 0;
 	public int energybuffer = 0;
 
 	// issue 0002: inserting items would duplicate the stack, fixed by stopping
@@ -202,7 +201,8 @@ public class CultivatorEntity extends BlockEntity {
 				this.inputItems.setStackInSlot(0, returnstack);
 			}
 		}
-		if (hleft < 1 && this.energy.getEnergyStored() > 0 && this.energybuffer < 256) {
+		// local variable for checking energybuffer amount
+		if (this.energy.getEnergyStored() > 0 && this.energybuffer < 256) {
 			int remainder = 256 - energybuffer;
 			if (this.energy.getEnergyStored() >= remainder) {
 				this.energy.extractEnergy(remainder, false);
@@ -212,18 +212,14 @@ public class CultivatorEntity extends BlockEntity {
 				this.energy.extractEnergy(this.energy.getEnergyStored(), false);
 				this.energybuffer += remainder;
 			}
-			if (this.energybuffer == 256) {
-				hleft++;
-			}
 		}
 
-		if (cooldown == true && hleft > 0) {
+		if (cooldown == true && this.energybuffer >= 256) {
 			cooldown = false;
 			if (Cultivator.isMature(this.getLevel().getBlockState(getBlockPos().above()), (ServerLevel) this.getLevel(),
 					this.getBlockPos().above()) == true
 					&& this.getLevel().getBlockState(getBlockPos().above()).getBlock() != Blocks.AIR) {
 				this.energybuffer = 0;
-				hleft--;
 				attemptInsert(Cultivator.Harvest(getLevel().getBlockState(getBlockPos().above()),
 						(ServerLevel) getLevel(), getBlockPos().above()));
 			}

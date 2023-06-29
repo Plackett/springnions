@@ -22,6 +22,7 @@
 
 package com.blueking6.springnions.gui;
 
+import com.blueking6.config.SpringnionsCommonConfigs;
 import com.blueking6.springnions.springnions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.FormattedCharSequence;
@@ -50,37 +51,57 @@ public class CultivatorScreen extends AbstractContainerScreen<CultivatorMenu> {
 		int relX = (this.width - (this.imageWidth + 6)) / 2;
 		int relY = (this.height - this.imageHeight) / 2;
 		graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth + 6, this.imageHeight);
-		int k = this.menu.getData(0);
-		k = Math.round(k * (16 / 200F));
-		graphics.blit(GUI, getGuiLeft() + 26, getGuiTop() + 22, 183, 57, 16, 16 - k);
+		// only render the fire if it can generate power
+		if (SpringnionsCommonConfigs.CULTIVATOR_RATE.get() > 0) {
+			int k = this.menu.getData(0);
+			k = Math.round(k * (16 / 200F));
+			graphics.blit(GUI, getGuiLeft() + 26, getGuiTop() + 22, 183, 57, 16, 16 - k);
+		} else {
+			graphics.blit(GUI, getGuiLeft() + 26, getGuiTop() + 22, 183, 74, 16, 16);
+			graphics.blit(GUI, getGuiLeft() + 25, getGuiTop() + 38, 181, 73, 18, 18);
+		}
+		// only render the power meter if it can store power
+		if (SpringnionsCommonConfigs.CULTIVATOR_CAPACITY.get() > 0) {
+			this.menu.getEntity().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
+				int energyAmount = handler.getEnergyStored();
+				int energyLevel = Math.round(energyAmount * (40 / 1024F));
+				graphics.blit(GUI, getGuiLeft() + 5, getGuiTop() + 16, 182, 16, 18, 40 - energyLevel);
+			});
+		} else {
+			graphics.blit(GUI, getGuiLeft() + 5, getGuiTop() + 15, 200, 64, 18, 42);
+		}
 		int energyBuffer = this.menu.getData(1);
 		int energyBufferLevel = Math.round(energyBuffer * (48 / 256F));
 		graphics.blit(GUI, getGuiLeft() + 53, getGuiTop() + 16, 207, 16, 43, 48 - energyBufferLevel);
-		this.menu.getEntity().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
-			int energyAmount = handler.getEnergyStored();
-			int energyLevel = Math.round(energyAmount * (40 / 1024F));
-			graphics.blit(GUI, getGuiLeft() + 5, getGuiTop() + 16, 182, 16, 18, 40 - energyLevel);
-		});
 	}
 
 	@Override
 	protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-		this.menu.getEntity().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
-			int energyAmount = handler.getEnergyStored();
+		// only render power meter tooltip if it can store power
+		if (SpringnionsCommonConfigs.CULTIVATOR_CAPACITY.get() > 0) {
+			this.menu.getEntity().getCapability(ForgeCapabilities.ENERGY).ifPresent(handler -> {
+				int energyAmount = handler.getEnergyStored();
 
-			if (isHovering(8, 15, 18, 42, mouseX, mouseY)) {
-				List<FormattedCharSequence> tooltipList = new ArrayList<>();
-				tooltipList
-						.add(Component
-								.literal(ChatFormatting.GOLD + "Power: " + ChatFormatting.DARK_GREEN + energyAmount
-										+ ChatFormatting.AQUA + " / " + ChatFormatting.DARK_GREEN
-										+ handler.getMaxEnergyStored() + ChatFormatting.GOLD + " FE")
-								.getVisualOrderText());
+				if (isHovering(8, 15, 18, 42, mouseX, mouseY)) {
+					List<FormattedCharSequence> tooltipList = new ArrayList<>();
+					tooltipList
+							.add(Component
+									.literal(ChatFormatting.GOLD + "Power: " + ChatFormatting.DARK_GREEN + energyAmount
+											+ ChatFormatting.AQUA + " / " + ChatFormatting.DARK_GREEN
+											+ handler.getMaxEnergyStored() + ChatFormatting.GOLD + " FE")
+									.getVisualOrderText());
 
-				graphics.renderTooltip(this.font, tooltipList, mouseX - 165, mouseY - 20);
-			}
-		});
+					graphics.renderTooltip(this.font, tooltipList, mouseX - 165, mouseY - 20);
+				}
+			});
+		}
 		super.renderLabels(graphics, mouseX, mouseY);
+	}
+
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float ticks) {
+		this.renderBackground(graphics);
+		super.render(graphics, mouseX, mouseY, ticks);
+		this.renderTooltip(graphics, mouseX, mouseY);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.blueking6.springnions.gui;
 
+import com.blueking6.config.SpringnionsCommonConfigs;
 import com.blueking6.springnions.entities.CultivatorEntity;
 import com.blueking6.springnions.init.BlockInit;
 import com.blueking6.springnions.init.MenuInit;
@@ -32,7 +33,9 @@ public class CultivatorMenu extends AbstractContainerMenu {
 		if (player.level().getBlockEntity(pos) instanceof CultivatorEntity cultivator) {
 			this.cultivator = cultivator;
 			this.data = cultivator.dataAccess;
-			addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 39));
+			if (SpringnionsCommonConfigs.CULTIVATOR_RATE.get() > 0) {
+				addSlot(new SlotItemHandler(cultivator.getInputItems(), SLOT_INPUT, 26, 39));
+			}
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 0, 98, 10));
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 1, 116, 10));
 			addSlot(new SlotItemHandler(cultivator.getOutputItems(), SLOT_OUTPUT + 2, 134, 10));

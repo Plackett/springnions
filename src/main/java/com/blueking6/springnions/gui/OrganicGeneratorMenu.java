@@ -1,5 +1,6 @@
 package com.blueking6.springnions.gui;
 
+import com.blueking6.config.SpringnionsCommonConfigs;
 import com.blueking6.springnions.entities.OrganicGeneratorEntity;
 import com.blueking6.springnions.init.BlockInit;
 import com.blueking6.springnions.init.MenuInit;
@@ -32,7 +33,9 @@ public class OrganicGeneratorMenu extends AbstractContainerMenu {
 		if (player.level().getBlockEntity(pos) instanceof OrganicGeneratorEntity entity) {
 			this.entity = entity;
 			this.data = entity.dataAccess;
-			addSlot(new SlotItemHandler(entity.getInputItems(), SLOT_INPUT, 80, 39));
+			if (SpringnionsCommonConfigs.ORGANIC_GENERATOR_RATE.get() > 0) {
+				addSlot(new SlotItemHandler(entity.getInputItems(), SLOT_INPUT, 80, 39));
+			}
 			addDataSlot(new DataSlot() {
 
 				@Override

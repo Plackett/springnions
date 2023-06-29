@@ -59,7 +59,6 @@ import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.PumpkinBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
-import net.minecraft.world.level.block.TorchflowerCropBlock;
 import net.minecraft.world.level.block.TwistingVinesBlock;
 import net.minecraft.world.level.block.TwistingVinesPlantBlock;
 import net.minecraft.world.level.block.VineBlock;
@@ -156,27 +155,31 @@ public class Cultivator extends Block implements EntityBlock {
 		} else if (state.hasProperty(SweetBerryBushBlock.AGE)) {
 			return state.getValue(SweetBerryBushBlock.AGE) >= 3;
 			// for pitcher plant and torchflower
-		} else if (block.getBlock() instanceof PitcherCropBlock || block.getBlock() instanceof TorchflowerCropBlock) {
+		} else if (block.getBlock() instanceof PitcherCropBlock || block.getBlock() == Blocks.TORCHFLOWER) {
 			if (block.getBlock() instanceof PitcherCropBlock) {
 				return state.getValue(PitcherCropBlock.AGE) >= 4;
 			} else {
-				return state.getValue(TorchflowerCropBlock.AGE) >= 2;
+				return true;
 			}
 			// for nether wart
 		} else if (block.getBlock() instanceof NetherWartBlock) {
 			return state.getValue(NetherWartBlock.AGE) >= 3;
 			// for all types of vines
 		} else if (block.getBlock() instanceof VineBlock || block.getBlock() instanceof CaveVinesPlantBlock
-				|| block.getBlock() instanceof WeepingVinesPlantBlock
-				|| block.getBlock() instanceof TwistingVinesPlantBlock) {
-			if (block.getBlock() instanceof TwistingVinesPlantBlock) {
-				return level.getBlockState(pos.above()).getBlock() instanceof TwistingVinesPlantBlock;
+				|| block.getBlock() instanceof CaveVinesBlock || block.getBlock() instanceof WeepingVinesPlantBlock
+				|| block.getBlock() instanceof WeepingVinesBlock || block.getBlock() instanceof TwistingVinesPlantBlock
+				|| block.getBlock() instanceof TwistingVinesBlock) {
+			if (block.getBlock() instanceof TwistingVinesPlantBlock || block.getBlock() instanceof TwistingVinesBlock) {
+				return level.getBlockState(pos.above()).getBlock() instanceof TwistingVinesPlantBlock
+						|| level.getBlockState(pos.above()).getBlock() instanceof TwistingVinesBlock;
 			} else {
 				return true;
 			}
 
 			// for cocoa beans
-		} else if (state.hasProperty(CocoaBlock.AGE)) {
+		} else if (state.hasProperty(CocoaBlock.AGE))
+
+		{
 			return state.getValue(CocoaBlock.AGE) >= 2;
 			// for cactus, sugarcane, and bamboo
 		} else if (block.getBlock() == level.getBlockState(pos.above()).getBlock()) {
@@ -222,9 +225,13 @@ public class Cultivator extends Block implements EntityBlock {
 			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
 			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
 			// for pitcher plant and torchflower
-		} else if (block.getBlock() instanceof PitcherCropBlock || block.getBlock() instanceof TorchflowerCropBlock) {
+		} else if (block.getBlock() instanceof PitcherCropBlock || block.getBlock() == Blocks.TORCHFLOWER) {
 			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
-			lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			if (block.getBlock() == Blocks.TORCHFLOWER) {
+				lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+			} else {
+				lvl.setBlockAndUpdate(pos, block.getBlock().defaultBlockState());
+			}
 			// for nether wart
 		} else if (block.getBlock() instanceof NetherWartBlock) {
 			items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
@@ -247,6 +254,10 @@ public class Cultivator extends Block implements EntityBlock {
 				lvl.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
 			} else if (block.getBlock() instanceof VineBlock) {
 				items.add(new ItemStack(Items.VINE, 1));
+				lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+			} else if (block.getBlock() instanceof WeepingVinesBlock
+					|| block.getBlock() instanceof WeepingVinesPlantBlock) {
+				items.add(new ItemStack(Items.WEEPING_VINES, 1));
 				lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			} else {
 				items.addAll(Block.getDrops(state, lvl, pos, lvl.getBlockEntity(pos)));
