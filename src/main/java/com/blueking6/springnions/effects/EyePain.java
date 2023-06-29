@@ -20,6 +20,7 @@ public class EyePain extends MobEffect {
 	@Override
 	public void addAttributeModifiers(LivingEntity entity, AttributeMap map, int i) {
 		if(entity instanceof Player player && entity.level().isClientSide) {
+			//TODO Add code to blur screen here
 		}
 		super.addAttributeModifiers(entity, map, i);
 	}

@@ -58,7 +58,7 @@ public class CultivatorScreen extends AbstractContainerScreen<CultivatorMenu> {
 			graphics.blit(GUI, getGuiLeft() + 26, getGuiTop() + 22, 183, 57, 16, 16 - k);
 		} else {
 			graphics.blit(GUI, getGuiLeft() + 26, getGuiTop() + 22, 183, 74, 16, 16);
-			graphics.blit(GUI, getGuiLeft() + 25, getGuiTop() + 38, 181, 73, 18, 18);
+			graphics.blit(GUI, getGuiLeft() + 25, getGuiTop() + 38, 182, 73, 18, 18);
 		}
 		// only render the power meter if it can store power
 		if (SpringnionsCommonConfigs.CULTIVATOR_CAPACITY.get() > 0) {

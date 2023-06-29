@@ -59,8 +59,8 @@ public class OrganicGeneratorScreen extends AbstractContainerScreen<OrganicGener
 			k = Math.round(k * (16 / 200F));
 			graphics.blit(GUI, getGuiLeft() + 80, getGuiTop() + 22, 183, 57, 16, 16 - k);
 		} else {
-			graphics.blit(GUI, getGuiLeft() + 80, getGuiTop() + 22, 184, 76, 16, 16);
-			graphics.blit(GUI, getGuiLeft() + 79, getGuiTop() + 42, 183, 75, 18, 18);
+			graphics.blit(GUI, getGuiLeft() + 80, getGuiTop() + 22, 183, 74, 16, 16);
+			graphics.blit(GUI, getGuiLeft() + 79, getGuiTop() + 38, 182, 73, 18, 18);
 		}
 		// only render power meter if it can store power
 		if (SpringnionsCommonConfigs.ORGANIC_GENERATOR_CAPACITY.get() > 0) {
@@ -70,7 +70,7 @@ public class OrganicGeneratorScreen extends AbstractContainerScreen<OrganicGener
 				graphics.blit(GUI, getGuiLeft() + 57, getGuiTop() + 17, 182, 16, 18, 40 - energyLevel);
 			});
 		} else {
-			graphics.blit(GUI, getGuiLeft() + 57, getGuiTop() + 17, 182, 15, 18, 42);
+			graphics.blit(GUI, getGuiLeft() + 57, getGuiTop() + 16, 200, 64, 18, 42);
 		}
 	}
 

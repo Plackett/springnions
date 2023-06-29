@@ -113,7 +113,9 @@ public class OrganicGeneratorEntity extends BlockEntity {
 	@Override
 	protected void saveAdditional(CompoundTag tag) {
 		tag.put("ITEMS_INPUT_TAG", inputItems.serializeNBT());
-		tag.putInt("ENERGY_TAG", energy.getEnergyStored());
+		// fix bug with energy still being stored even though it was higher than max value
+		tag.putInt("ENERGY_TAG", Math.max(0,
+				Math.min(SpringnionsCommonConfigs.ORGANIC_GENERATOR_CAPACITY.get(), energy.getEnergyStored())));
 		tag.putInt("BurnTime", this.litTime);
 		super.saveAdditional(tag);
 	}

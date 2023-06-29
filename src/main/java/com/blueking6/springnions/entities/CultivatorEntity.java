@@ -25,6 +25,7 @@ package com.blueking6.springnions.entities;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
+import com.blueking6.config.SpringnionsCommonConfigs;
 import com.blueking6.springnions.blocks.Cultivator;
 import com.blueking6.springnions.init.EntityInit;
 import com.blueking6.tools.ModifiedEnergyStorage;
@@ -79,7 +80,8 @@ public class CultivatorEntity extends BlockEntity {
 		}
 	};
 
-	private final ModifiedEnergyStorage energy = new ModifiedEnergyStorage(1024);
+	private final ModifiedEnergyStorage energy = new ModifiedEnergyStorage(
+			SpringnionsCommonConfigs.CULTIVATOR_CAPACITY.get());
 
 	private final LazyOptional<IItemHandler> itemHandler = LazyOptional
 			.of(() -> new CombinedInvWrapper(inputItems, outputItems));
@@ -157,9 +159,11 @@ public class CultivatorEntity extends BlockEntity {
 	protected void saveAdditional(CompoundTag tag) {
 		tag.put("ITEMS_INPUT_TAG", inputItems.serializeNBT());
 		tag.put("ITEMS_OUTPUT_TAG", outputItems.serializeNBT());
-		tag.putInt("ENERGY_TAG", energy.getEnergyStored());
+		tag.putInt("ENERGY_TAG",
+				Math.max(0, Math.min(SpringnionsCommonConfigs.CULTIVATOR_CAPACITY.get(), energy.getEnergyStored())));
+		tag.putInt("EnergyBuffer",
+				Math.max(0, Math.min(SpringnionsCommonConfigs.CULTIVATOR_CONSUMPTION.get(), this.energybuffer)));
 		tag.putInt("BurnTime", this.litTime);
-		tag.putInt("EnergyBuffer", this.energybuffer);
 		super.saveAdditional(tag);
 	}
 
@@ -187,10 +191,11 @@ public class CultivatorEntity extends BlockEntity {
 		// internal generator
 		if (this.litTime > 0) {
 			--this.litTime;
-			this.energy.receiveEnergy(1, false);
+			this.energy.receiveEnergy(SpringnionsCommonConfigs.CULTIVATOR_RATE.get(), false);
 		} else {
 			if (ForgeHooks.getBurnTime(new ItemStack(this.inputItems.getStackInSlot(0).getItem(), 1), null) > 0
-					&& this.energy.getEnergyStored() < this.energy.getMaxEnergyStored()) {
+					&& this.energy.getEnergyStored() < this.energy.getMaxEnergyStored()
+					&& SpringnionsCommonConfigs.CULTIVATOR_RATE.get() > 0) {
 				litTime += ForgeHooks.getBurnTime(this.inputItems.getStackInSlot(0), null);
 				ItemStack returnstack = this.inputItems.getStackInSlot(0);
 				if (returnstack.getItem() == Items.LAVA_BUCKET) {
@@ -202,8 +207,9 @@ public class CultivatorEntity extends BlockEntity {
 			}
 		}
 		// local variable for checking energybuffer amount
-		if (this.energy.getEnergyStored() > 0 && this.energybuffer < 256) {
-			int remainder = 256 - energybuffer;
+		if (this.energy.getEnergyStored() > 0
+				&& this.energybuffer < SpringnionsCommonConfigs.CULTIVATOR_CONSUMPTION.get()) {
+			int remainder = SpringnionsCommonConfigs.CULTIVATOR_CONSUMPTION.get() - energybuffer;
 			if (this.energy.getEnergyStored() >= remainder) {
 				this.energy.extractEnergy(remainder, false);
 				this.energybuffer += remainder;
@@ -214,7 +220,7 @@ public class CultivatorEntity extends BlockEntity {
 			}
 		}
 
-		if (cooldown == true && this.energybuffer >= 256) {
+		if (cooldown == true && this.energybuffer >= SpringnionsCommonConfigs.CULTIVATOR_CONSUMPTION.get()) {
 			cooldown = false;
 			if (Cultivator.isMature(this.getLevel().getBlockState(getBlockPos().above()), (ServerLevel) this.getLevel(),
 					this.getBlockPos().above()) == true
