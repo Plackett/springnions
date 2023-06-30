@@ -1,5 +1,8 @@
 package com.blueking6.springnions.effects;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,16 +21,11 @@ public class EyePain extends MobEffect {
 	}
 
 	@Override
-	public void addAttributeModifiers(LivingEntity entity, AttributeMap map, int i) {
-		if(entity instanceof Player player && entity.level().isClientSide) {
-			//TODO Add code to blur screen here
-		}
-		super.addAttributeModifiers(entity, map, i);
-	}
-
-	@Override
 	public void applyEffectTick(LivingEntity entity, int amp) {
 		super.applyEffectTick(entity, amp);
+		if (entity instanceof Player player && entity.level().isClientSide) {
+			// add blur effect
+		}
 	}
 
 	@Override
