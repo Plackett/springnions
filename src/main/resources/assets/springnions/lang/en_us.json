@@ -17,6 +17,14 @@
 	"item.springnions.soy_pulp": "Soy Pulp",
 	"item.springnions.cultivator": "Cultivator",
 	"item.springnions.organic_generator": "Organic Generator",
+	"item.minecraft.potion.effect.onion_juice": "Onion Juice",
+	"item.minecraft.potion.effect.potent_onion_juice": "Potent Onion Juice",
+	"item.minecraft.splash_potion.effect.onion_juice": "Onion Juice Spray",
+	"item.minecraft.splash_potion.effect.potent_onion_juice": "Potent Onion Juice Spray",
+	"item.minecraft.lingering_potion.effect.onion_juice": "Onion Juice Jug",
+	"item.minecraft.lingering_potion.effect.potent_onion_juice": "Potent Onion Juice Jug",
+	"item.minecraft.tipped_arrow.effect.onion_juice": "Arrow of Onion Juice",
+	"item.minecraft.tipped_arrow.effect.potent_onion_juice": "Arrow of Potent Onion Juice",
 	
 	"block.springnions.onion_shelf": "Onion Shelf",
 	"block.springnions.tofu_press": "Tofu Press",
@@ -30,5 +38,6 @@
 	
 	"sounds.springnions.tofu_press_process": "Tofu Press Pressing",
 	
-	"effect.springnions.eye_pain": "Eye Pain"
+	"effect.springnions.eye_pain": "Eye Pain",
+	"effect.springnions.eye_pain_ii": "Eye Pain II"
 }

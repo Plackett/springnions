@@ -150,9 +150,7 @@ public class OrganicGeneratorEntity extends BlockEntity {
 					&& SpringnionsCommonConfigs.ORGANIC_GENERATOR_RATE.get() > 0) {
 				litTime += ForgeHooks.getBurnTime(this.inputItems.getStackInSlot(0), null);
 				ItemStack returnstack = this.inputItems.getStackInSlot(0);
-				if (returnstack.getItem() == Items.LAVA_BUCKET) {
-					returnstack = new ItemStack(Items.BUCKET, 1);
-				} else {
+				if (returnstack.getItem() != Items.LAVA_BUCKET) {
 					returnstack.shrink(1);
 				}
 				this.inputItems.setStackInSlot(0, returnstack);

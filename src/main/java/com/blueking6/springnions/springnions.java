@@ -39,6 +39,7 @@ import com.blueking6.springnions.init.EffectInit;
 import com.blueking6.springnions.init.FluidInit;
 import com.blueking6.springnions.init.ItemInit;
 import com.blueking6.springnions.init.MenuInit;
+import com.blueking6.springnions.init.PotionInit;
 import com.blueking6.springnions.init.SoundInit;
 import com.blueking6.springnions.init.EntityInit;
 import com.mojang.logging.LogUtils;
@@ -133,6 +134,7 @@ public class springnions {
 		CreativeTabInit.register(bus);
 		MenuInit.register(bus);
 		EffectInit.register(bus);
+		PotionInit.register(bus);
 
 		bus.addListener(this::clientSetup);
 		bus.addListener(this::commonSetup);
