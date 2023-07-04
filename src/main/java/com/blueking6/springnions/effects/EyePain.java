@@ -13,15 +13,22 @@ public class EyePain extends MobEffect {
 		super(category, color);
 	}
 
+	public static boolean shaderEnabled = false;
+
+	@SuppressWarnings("resource")
 	@Override
-	public void removeAttributeModifiers(LivingEntity p_19469_, AttributeMap p_19470_, int p_19471_) {
-		removeShaders();
-		super.removeAttributeModifiers(p_19469_, p_19470_, p_19471_);
+	public void removeAttributeModifiers(LivingEntity entity, AttributeMap p_19470_, int p_19471_) {
+		if(entity.level().isClientSide == true) {
+			removeShaders();
+		}
+		super.removeAttributeModifiers(entity, p_19470_, p_19471_);
 	}
 
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amp) {
-		applyShader(new ResourceLocation("springnions:eye_pain"));
+		if (shaderEnabled == false && entity.level().isClientSide == true) {
+			applyShader(new ResourceLocation("springnions:eye_pain"));
+		}
 		super.applyEffectTick(entity, amp);
 	}
 
@@ -30,23 +37,18 @@ public class EyePain extends MobEffect {
 		if (Minecraft.getInstance().gameRenderer.currentEffect() == null) {
 			ResourceLocation shader = location.withPrefix("shaders/post/").withSuffix(".json");
 			Minecraft.getInstance().gameRenderer.loadEffect(shader);
+			shaderEnabled = true;
 		}
 	}
 
 	@SuppressWarnings("resource")
 	public static void removeShaders() {
-		if (Minecraft.getInstance().gameRenderer.currentEffect() != null) {
-			Minecraft.getInstance().gameRenderer.shutdownEffect();
-		}
+		Minecraft.getInstance().gameRenderer.shutdownEffect();
+		shaderEnabled = false;
 	}
 
 	@Override
 	public boolean isDurationEffectTick(int p_19455_, int p_19456_) {
-		return true;
-	}
-
-	@Override
-	public boolean isInstantenous() {
 		return true;
 	}
 

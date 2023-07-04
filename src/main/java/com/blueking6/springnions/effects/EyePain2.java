@@ -12,25 +12,25 @@ public class EyePain2 extends MobEffect {
 		super(category, color);
 	}
 
+	@SuppressWarnings("resource")
 	@Override
-	public void removeAttributeModifiers(LivingEntity entity, AttributeMap map, int amp) {
-		EyePain.removeShaders();
-		super.removeAttributeModifiers(entity, map, amp);
+	public void removeAttributeModifiers(LivingEntity entity, AttributeMap p_19470_, int p_19471_) {
+		if (entity.level().isClientSide == true) {
+			EyePain.removeShaders();
+		}
+		super.removeAttributeModifiers(entity, p_19470_, p_19471_);
 	}
 
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amp) {
-		EyePain.applyShader(new ResourceLocation("springnions:eye_pain_ii"));
+		if (EyePain.shaderEnabled == false && entity.level().isClientSide) {
+			EyePain.applyShader(new ResourceLocation("springnions:eye_pain_ii"));
+		}
 		super.applyEffectTick(entity, amp);
 	}
 
 	@Override
 	public boolean isDurationEffectTick(int time, int amp) {
-		return true;
-	}
-
-	@Override
-	public boolean isInstantenous() {
 		return true;
 	}
 
