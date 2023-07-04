@@ -166,10 +166,10 @@ public class springnions {
 	@SubscribeEvent
 	public void itemCrafted(final ItemCraftedEvent event) {
 		// give eye pain for 15 minutes at max strength for crafting cultivator
-		if (event.getCrafting().getItem() == ItemInit.CULTIVATOR.get()) {
-			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 18000, 255));
-		}
-		;
+//		if (event.getCrafting().getItem() == ItemInit.CULTIVATOR.get()) {
+//			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 18000, 255));
+//		}
+//		;
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
