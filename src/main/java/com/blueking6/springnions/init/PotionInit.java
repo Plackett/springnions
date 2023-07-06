@@ -37,7 +37,7 @@ public class PotionInit {
 	public static final RegistryObject<Potion> EYE_PAIN_POTION = POTIONS.register("onion_juice",
 			() -> new Potion(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 3600)));
 	public static final RegistryObject<Potion> EYE_PAIN_POTION_II = POTIONS.register("potent_onion_juice",
-			() -> new Potion(new MobEffectInstance(EffectInit.EYE_PAIN_2.get(), 9600)));
+			() -> new Potion(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 900, 1)));
 
 	public static void register(IEventBus bus) {
 		POTIONS.register(bus);

@@ -1,12 +1,12 @@
 {
 	"targets": [
-		"swap"
+		"pain"
 	],
 	"passes": [
 		{
 			"name": "blur",
 			"intarget": "minecraft:main",
-			"outtarget": "swap",
+			"outtarget": "pain",
 			"uniforms": [
 				{
 					"name": "BlurDir",
@@ -18,14 +18,14 @@
 				{
 					"name": "Radius",
 					"values": [
-						40.0
+						30.0
 					]
 				}
 			]
 		},
 		{
 			"name": "blit",
-			"intarget": "swap",
+			"intarget": "pain",
 			"outtarget": "minecraft:main"
 		}
 	]

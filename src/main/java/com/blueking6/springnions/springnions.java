@@ -23,6 +23,7 @@
 package com.blueking6.springnions;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -41,26 +42,34 @@ import com.blueking6.springnions.init.ItemInit;
 import com.blueking6.springnions.init.MenuInit;
 import com.blueking6.springnions.init.PotionInit;
 import com.blueking6.springnions.init.SoundInit;
+import com.blueking6.tools.PotionBrewingRecipe;
 import com.blueking6.springnions.init.EntityInit;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -74,12 +83,15 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 @Mod("springnions")
 public class springnions {
 
 	public static final String MOD_ID = "springnions";
 	private static final Logger LOGGER = LogUtils.getLogger();
+	private static boolean markShaderForRemoval = false;
+	private static boolean markShaderForAddition = true;
 
 	@SubscribeEvent
 	public void onServerStarting(ServerStartingEvent event) {
@@ -125,6 +137,7 @@ public class springnions {
 
 	public springnions() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		IEventBus fbus = MinecraftForge.EVENT_BUS;
 
 		ItemInit.register(bus);
 		BlockInit.register(bus);
@@ -147,8 +160,73 @@ public class springnions {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SpringnionsCommonConfigs.Specs,
 				"springnions-common.toml");
 
+		if (FMLLoader.getDist().isClient()) {
+			clientUtil(bus, fbus);
+		}
 		MinecraftForge.EVENT_BUS.register(this);
 
+	}
+
+	private static void clientUtil(IEventBus bus, IEventBus fbus) {
+		fbus.addListener(springnions::playerTick);
+		fbus.addListener(springnions::removeEffect);
+		fbus.addListener(springnions::addedEffect);
+		fbus.addListener(springnions::expiredEffect);
+	}
+
+	@SuppressWarnings("resource")
+	static void playerTick(final TickEvent.PlayerTickEvent event) {
+		Optional<ResourceLocation> option0 = Optional.of(new ResourceLocation("springnions:eye_pain"));
+		Optional<ResourceLocation> option1 = Optional.of(new ResourceLocation("springnions:eye_pain_ii"));
+		ResourceLocation loc0 = option0
+				.map(resourceLocation -> resourceLocation.withPrefix("shaders/post/").withSuffix(".json")).get();
+		ResourceLocation loc1 = option1
+				.map(resourceLocation -> resourceLocation.withPrefix("shaders/post/").withSuffix(".json")).get();
+		// check if player has effect
+		if (event.player.hasEffect(EffectInit.EYE_PAIN.get()) && option0.isPresent() && option1.isPresent()
+				&& event.side.isClient()) {
+			GameRenderer render = Minecraft.getInstance().gameRenderer;
+			// change shader if higher amplitude
+			if (event.player.getEffect(EffectInit.EYE_PAIN.get()).getAmplifier() >= 1) {
+				loc0 = loc1;
+			}
+			// first tick add shader if not marked for removal
+			if (markShaderForAddition == true && markShaderForRemoval == false) {
+				render.loadEffect(loc0);
+				markShaderForAddition = false;
+				// remove it if its marked for removal
+			} else if (markShaderForRemoval == true) {
+				render.shutdownEffect();
+				markShaderForRemoval = false;
+			}
+			// backup removal method for if the potion effect is removed before it runs out
+		} else if (markShaderForRemoval == true && Minecraft.getInstance().gameRenderer.currentEffect() != null
+				&& event.side.isClient()) {
+			Minecraft.getInstance().gameRenderer.shutdownEffect();
+			markShaderForRemoval = false;
+		}
+	}
+
+	static void removeEffect(final MobEffectEvent.Remove event) {
+		// check if shader is still active
+		if (event.getEffectInstance().getEffect() == EffectInit.EYE_PAIN.get()
+				&& Minecraft.getInstance().gameRenderer.currentEffect() != null) {
+			markShaderForRemoval = true;
+		}
+	}
+
+	static void addedEffect(final MobEffectEvent.Added event) {
+		if (event.getEffectInstance().getEffect() == EffectInit.EYE_PAIN.get()) {
+			markShaderForAddition = true;
+		}
+	}
+
+	static void expiredEffect(final MobEffectEvent.Expired event) {
+		// check if shader is still active
+		if (event.getEffectInstance().getEffect() == EffectInit.EYE_PAIN.get()
+				&& Minecraft.getInstance().gameRenderer.currentEffect() != null) {
+			markShaderForRemoval = true;
+		}
 	}
 
 	@SuppressWarnings({ "deprecation" })
@@ -165,16 +243,47 @@ public class springnions {
 
 	@SubscribeEvent
 	public void itemCrafted(final ItemCraftedEvent event) {
-		// give eye pain for 15 minutes at max strength for crafting cultivator
-//		if (event.getCrafting().getItem() == ItemInit.CULTIVATOR.get()) {
-//			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 18000, 255));
-//		}
-//		;
+		// give eye pain for 15 minutes at high strength for crafting cultivator
+		if (event.getCrafting().getItem() == ItemInit.CULTIVATOR.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 18000, 1));
+		}
+		// give eye pain for 5 minutes at weak strength for crafting generator
+		if (event.getCrafting().getItem() == ItemInit.ORGANIC_GENERATOR.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 6000, 0));
+		}
+		// give eye pain for 15 seconds at weak strength for crafting a golden onion
+		if (event.getCrafting().getItem() == ItemInit.GOLDEN_ONION.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 300, 0));
+		}
+		// give eye pain for 15 seconds at weak strength for crafting an onion crate
+		if (event.getCrafting().getItem() == ItemInit.ONION_CRATE.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 300, 0));
+		}
+		// give eye pain for 15 seconds at weak strength for crafting an onion shelf
+		if (event.getCrafting().getItem() == ItemInit.ONION_SHELF_ITEM.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 300, 0));
+		}
+		// give eye pain for 30 seconds at weak strength for crafting a tofu press lv1
+		if (event.getCrafting().getItem() == ItemInit.TOFUPRESS.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 600, 0));
+		}
+		// give eye pain for 60 seconds at weak strength for crafting a tofu press lv2
+		if (event.getCrafting().getItem() == ItemInit.TOFUPRESS2.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 1200, 0));
+		}
+		// give eye pain for 60 seconds at high strength for crafting a tofu press lv3
+		if (event.getCrafting().getItem() == ItemInit.TOFUPRESS3.get()) {
+			event.getEntity().addEffect(new MobEffectInstance(EffectInit.EYE_PAIN.get(), 1200, 1));
+		}
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			ComposterBlock.COMPOSTABLES.put(ItemInit.SOY_PULP.get(), 0.5F);
+			BrewingRecipeRegistry.addRecipe(
+					new PotionBrewingRecipe(Potions.WATER, ItemInit.ONION.get(), PotionInit.EYE_PAIN_POTION.get()));
+			BrewingRecipeRegistry.addRecipe(new PotionBrewingRecipe(PotionInit.EYE_PAIN_POTION.get(),
+					ItemInit.GOLDEN_ONION.get(), PotionInit.EYE_PAIN_POTION_II.get()));
 		});
 	}
 

@@ -1,0 +1,36 @@
+{
+  "parent": "springnions:onion_planter",
+  "criteria": {
+    "crafted_onion_potion": {
+      "conditions": {
+        "effects": {
+          "springnions:eye_pain": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "springnions:textures/block/onion_shelf.png",
+    "description": {
+      "translate": "Experience the pain that onions can cause."
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"springnions:onion_juice\"}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "C₃H₆OS"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_onion_potion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

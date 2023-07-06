@@ -26,19 +26,26 @@ import java.util.function.Consumer;
 
 import com.blueking6.springnions.springnions;
 import com.blueking6.springnions.init.BlockInit;
+import com.blueking6.springnions.init.EffectInit;
 import com.blueking6.springnions.init.ItemInit;
+import com.blueking6.springnions.init.PotionInit;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.BlockPredicate;
+import net.minecraft.advancements.critereon.EffectsChangedTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.advancements.critereon.MobEffectsPredicate;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
@@ -150,6 +157,15 @@ public class AdvancementGen implements ForgeAdvancementProvider.AdvancementGener
 				.addCriterion("has_cult", InventoryChangeTrigger.TriggerInstance.hasItems(ItemInit.CULTIVATOR.get()))
 				.parent(industry)
 				.save(saver, new ResourceLocation(springnions.MOD_ID, "cultivator"), existingFileHelper);
+		ItemStack item = new ItemStack(Items.POTION);
+		PotionUtils.setPotion(item, PotionInit.EYE_PAIN_POTION.get());
+		Advancement.Builder.advancement().display(item, Component.translatable("C₃H₆OS"),
+				Component.translatable("Experience the pain that onions can cause."),
+				new ResourceLocation("springnions:textures/block/onion_shelf.png"), FrameType.TASK, true, true, true)
+				.addCriterion("crafted_onion_potion",
+						EffectsChangedTrigger.TriggerInstance
+								.hasEffects(MobEffectsPredicate.effects().and(EffectInit.EYE_PAIN.get())))
+				.parent(onion).save(saver, new ResourceLocation(springnions.MOD_ID, "onion_juice"), existingFileHelper);
 
 	}
 
