@@ -34,7 +34,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
@@ -150,10 +149,12 @@ public class OrganicGeneratorEntity extends BlockEntity {
 					&& SpringnionsCommonConfigs.ORGANIC_GENERATOR_RATE.get() > 0) {
 				litTime += ForgeHooks.getBurnTime(this.inputItems.getStackInSlot(0), null);
 				ItemStack returnstack = this.inputItems.getStackInSlot(0);
-				if (returnstack.getItem() != Items.LAVA_BUCKET) {
+				if (returnstack.getCount() == 1) {
+					this.inputItems.setStackInSlot(0, ItemStack.EMPTY);
+				} else {
 					returnstack.shrink(1);
+					this.inputItems.setStackInSlot(0, returnstack);
 				}
-				this.inputItems.setStackInSlot(0, returnstack);
 			} else {
 				if (getBlockState().getValue(OrganicGenerator.LIT) != false) {
 					this.getLevel().setBlockAndUpdate(getBlockPos(),

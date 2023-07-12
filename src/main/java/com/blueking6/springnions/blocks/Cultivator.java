@@ -300,9 +300,10 @@ public class Cultivator extends Block implements EntityBlock {
 		}
 		for (int index = 0; index < items.size(); index++) {
 			if (block.getBlock() instanceof CropBlock crop) {
-
 				if (crop.getBaseSeedId() == items.get(index).getItem()) {
-					items.remove(index);
+					ItemStack seed = items.get(index);
+					seed.shrink(1);
+					items.set(index, seed);
 				}
 			}
 		}

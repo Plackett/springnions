@@ -36,7 +36,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,8 +66,10 @@ public class CultivatorEntity extends BlockEntity {
 
 	// issue 0002: inserting items would duplicate the stack, fixed by stopping
 	// returning of the stack in insertItem
-	private final ItemStackHandler inputItems = new ItemStackHandler(1) {};
-	private final ItemStackHandler outputItems = new ItemStackHandler(9) {};
+	private final ItemStackHandler inputItems = new ItemStackHandler(1) {
+	};
+	private final ItemStackHandler outputItems = new ItemStackHandler(9) {
+	};
 
 	private final ModifiedEnergyStorage energy = new ModifiedEnergyStorage(
 			SpringnionsCommonConfigs.CULTIVATOR_CAPACITY.get());
@@ -188,10 +189,12 @@ public class CultivatorEntity extends BlockEntity {
 					&& SpringnionsCommonConfigs.CULTIVATOR_RATE.get() > 0) {
 				litTime += ForgeHooks.getBurnTime(this.inputItems.getStackInSlot(0), null);
 				ItemStack returnstack = this.inputItems.getStackInSlot(0);
-				if (returnstack.getItem() != Items.LAVA_BUCKET) {
+				if (returnstack.getCount() == 1) {
+					this.inputItems.setStackInSlot(0, ItemStack.EMPTY);
+				} else {
 					returnstack.shrink(1);
+					this.inputItems.setStackInSlot(0, returnstack);
 				}
-				this.inputItems.setStackInSlot(0, returnstack);
 			}
 		}
 		// local variable for checking energybuffer amount
