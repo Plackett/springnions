@@ -56,22 +56,23 @@ public class Soy extends CropBlock {
 		float value = rand.nextFloat();
 		int count = 1;
 		float chance = 0.5714286f;
-		if(state.getValue(AGE) == 7) {
-			for(int i = 2;i < SpringnionsCommonConfigs.SOYBEAN_RETURNS.get(); i++) {
-				if(value <= chance/i) {
+		if (state.getValue(AGE) == 7) {
+			for (int i = 2; i < SpringnionsCommonConfigs.SOYBEAN_RETURNS.get(); i++) {
+				if (value <= chance / i) {
 					count++;
-				} else { break; }
+				} else {
+					break;
+				}
 			}
-			returnitems.add(new ItemStack(ItemInit.SOYBEANS.get(),count+1));
+			returnitems.add(new ItemStack(ItemInit.SOYBEANS.get(), count + 1));
 		} else {
-			returnitems.add(new ItemStack(ItemInit.SOYBEANS.get(),count));
+			returnitems.add(new ItemStack(ItemInit.SOYBEANS.get(), count));
 		}
 		return returnitems;
 	}
 
 	@Override
-	protected ItemLike getBaseSeedId() {
-		// TODO Auto-generated method stub
+	public ItemLike getBaseSeedId() {
 		return ItemInit.SOYBEANS.get();
 	}
 }

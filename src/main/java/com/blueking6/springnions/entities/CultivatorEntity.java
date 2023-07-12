@@ -67,18 +67,8 @@ public class CultivatorEntity extends BlockEntity {
 
 	// issue 0002: inserting items would duplicate the stack, fixed by stopping
 	// returning of the stack in insertItem
-	private final ItemStackHandler inputItems = new ItemStackHandler(1) {
-		@Override
-		protected void onContentsChanged(int slot) {
-			setChanged();
-		}
-	};
-	private final ItemStackHandler outputItems = new ItemStackHandler(9) {
-		@Override
-		protected void onContentsChanged(int slot) {
-			setChanged();
-		}
-	};
+	private final ItemStackHandler inputItems = new ItemStackHandler(1) {};
+	private final ItemStackHandler outputItems = new ItemStackHandler(9) {};
 
 	private final ModifiedEnergyStorage energy = new ModifiedEnergyStorage(
 			SpringnionsCommonConfigs.CULTIVATOR_CAPACITY.get());

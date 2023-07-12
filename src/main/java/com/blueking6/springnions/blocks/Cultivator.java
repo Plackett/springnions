@@ -298,6 +298,14 @@ public class Cultivator extends Block implements EntityBlock {
 			lvl.setBlockAndUpdate(pos.above(), Blocks.WATER.defaultBlockState());
 			lvl.setBlockAndUpdate(pos, Blocks.KELP.defaultBlockState());
 		}
+		for (int index = 0; index < items.size(); index++) {
+			if (block.getBlock() instanceof CropBlock crop) {
+
+				if (crop.getBaseSeedId() == items.get(index).getItem()) {
+					items.remove(index);
+				}
+			}
+		}
 		return items;
 	}
 
