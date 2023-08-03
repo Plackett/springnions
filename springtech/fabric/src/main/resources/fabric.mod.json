@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "springtech",
+	"version": "${version}",
+	"name": "springtech",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/springtech/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.blueking6.springtech.ExampleMod"
+		],
+		"client": [
+			"com.blueking6.springtech.ExampleModClient"
+		],
+		"fabric-datagen": [
+			"com.blueking6.springtech.ExampleModDataGenerator"
+		]
+	},
+	"mixins": [
+		"springtech.mixins.json",
+		{
+			"config": "springtech.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.22",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

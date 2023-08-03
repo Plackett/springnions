@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "springmagic",
+	"version": "${version}",
+	"name": "springmagic",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/springmagic/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.blueking6.springmagic.ExampleMod"
+		],
+		"client": [
+			"com.blueking6.springmagic.ExampleModClient"
+		],
+		"fabric-datagen": [
+			"com.blueking6.springmagic.ExampleModDataGenerator"
+		]
+	},
+	"mixins": [
+		"springmagic.mixins.json",
+		{
+			"config": "springmagic.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.22",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
